@@ -14,7 +14,7 @@ Aplikacja służąca do zarządzania biblioteką. System ten ma na celu usprawni
 ### Podstawowe funkcje systemu:
 -  ### biblioteka:
    - dodawanie/usuwanie książek
-\
+<br>
 -  ### użytkownik:
    - przeglądanie dostępnych książek
    - wypożyczanie/rezerwacja książek
