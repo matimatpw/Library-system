@@ -12,10 +12,10 @@ Aplikacja służąca do zarządzania biblioteką. System ten ma na celu usprawni
 
 
 ### Podstawowe funkcje systemu:
--  ### biblioteka:
+- ### biblioteka:
    - dodawanie/usuwanie książek
 <br>
--  ### użytkownik:
+- ### użytkownik:
    - przeglądanie dostępnych książek
    - wypożyczanie/rezerwacja książek
 
