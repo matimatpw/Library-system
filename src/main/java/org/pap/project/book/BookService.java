@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RestController
 public class BookService {
     private final BookRepository bookRepository;
 
@@ -19,6 +20,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
+    @RequestMapping("/books")
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
