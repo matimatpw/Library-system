@@ -1,22 +1,39 @@
-import React from 'react';
-import BookList from './BookList';
-import AddButton from './AddButton';
-import './App.css';
+// StudentList.js
+import React, { Component } from 'react';
 
-class App extends React.Component {
+class BookList extends Component {
+    constructor() {
+        super();
+        this.state = {
+            books: [],
+        };
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:8080/books')
+            .then(response => response.json())
+            .then(data => this.setState({ books: data }))
+            .catch(error => console.error('Error fetching student data:', error));
+    }
+
     render() {
         return (
-            <div className='App'>
-                <header className='App-header'>
-                   Book List
-                </header>
-                <BookList />
-                <AddButton type={"add"}/>
-                <AddButton type={"delete"}/>
-
+            <div>
+                <h1>Book List</h1>
+                <ul>
+                    {this.state.books.map(book => (
+                        <li key={book.id}>
+                            {book.isbn} - {book.title} - {book.author}
+                        </li>
+                    ))}
+                </ul>
             </div>
         );
     }
 }
 
+<<<<<<< HEAD
 export default App;
+=======
+export default BookList;
+>>>>>>> 8f6bc6a (refactor)
