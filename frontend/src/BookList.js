@@ -21,14 +21,14 @@ class BookList extends Component {
             <div>
                 <ul>
                     {this.state.books.map(book => (
-                        <li >
+                        <li key={book.isbn}>
                             <div >
                                 <h2>
                                     <p>{book.title}</p>
                                 </h2>
                             </div>
                             <p style={{fontWeight: 'bold' }} >Author: {book.author}</p>
-                            <p>ISBN: {book.isbn}</p>
+                            <p>ID: {book.isbn}</p>
                         </li>
                     ))}
                 </ul>
