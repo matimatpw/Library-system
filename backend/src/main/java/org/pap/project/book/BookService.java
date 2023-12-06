@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RestController
 public class BookService {
+    @Autowired
     private final BookRepository bookRepository;
 
     @Autowired
@@ -17,23 +17,32 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    @GetMapping("/books")
-    public List<Book> getBooks() {
+    public List<Book> allBooks() {
         return bookRepository.findAll();
     }
 
-    @GetMapping("/book")
-    public Optional<Book> getBookById(@RequestParam(value="isbn")String isbn) {
+    public Optional<Book> singleBookById(@RequestParam(value="isbn")String isbn) {
         return bookRepository.findById(isbn);
     }
 
-    @PostMapping("/book")
-    public void addNewBook(@RequestBody Book book) {
+    public Optional<Book> singleBookByTitle(String title) {
+        return bookRepository.findBookByTitle(title);
+    }
+
+    public Book createNewBook(String isbn, String title, String author) {
+        Book book = new Book(isbn,title, author);
+        bookRepository.save(book);
+        return book;
+
+    }
+
+    public Book addNewBook(@RequestBody Book book) {
         Optional<Book> bookOptional = bookRepository.findById(book.getIsbn());
         if (bookOptional.isPresent()) {
             throw new IllegalStateException("Book already exists");
         }
         bookRepository.save(book);
+        return book;
 
     }
 }
