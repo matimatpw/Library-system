@@ -29,6 +29,20 @@ body {
   border-color: tan;
 }
 
+.FetchDataButton ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-size: 20px;
+  line-height: 1; /* odstęp miedzy liniami */
+  margin: 80px;
+  margin-bottom: 150px;
+  border: 5px solid transparent;
+  background-color: burlywood;
+  border-color: tan;
+}
+
 .App span {
   display: flex;
   justify-content: space-evenly;
@@ -53,6 +67,11 @@ button.add {
 }
 
 button.delete {
+  background-color: burlywood;
+  color: black;
+}
+
+button.Display_books {
   background-color: burlywood;
   color: black;
 }

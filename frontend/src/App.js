@@ -10,7 +10,8 @@ class App extends React.Component {
                 <header>
                    Book List
                 </header>
-                <BookList />
+                <BookList/>
+                
                 <span>
                     <AddButton type={"add"}/>
                     <AddButton type={"delete"}/>
