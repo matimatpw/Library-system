@@ -7,13 +7,14 @@ class App extends React.Component {
     render() {
         return (
             <div className='App'>
-                <header className='App-header'>
+                <header>
                    Book List
                 </header>
                 <BookList />
-                <AddButton type={"add"}/>
-                <AddButton type={"delete"}/>
-
+                <span>
+                    <AddButton type={"add"}/>
+                    <AddButton type={"delete"}/>
+                </span>
             </div>
         );
     }

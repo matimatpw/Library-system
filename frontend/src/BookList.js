@@ -18,17 +18,17 @@ class BookList extends Component {
 
     render() {
         return (
-            <div>
+            <div className='BookList'>
                 <ul>
                     {this.state.books.map(book => (
-                        <li >
+                        <li key={book.isbn}>
                             <div >
                                 <h2>
                                     <p>{book.title}</p>
                                 </h2>
                             </div>
-                            <p style={{fontWeight: 'bold' }} >Author: {book.author}</p>
-                            <p>ISBN: {book.isbn}</p>
+                            <p className='author' >Author: {book.author}</p>
+                            <p>isbn: {book.isbn}</p>
                         </li>
                     ))}
                 </ul>
