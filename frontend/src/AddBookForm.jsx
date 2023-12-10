@@ -54,7 +54,7 @@ const AddBookForm = ({ addBook }) => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>
-          Tytuł:
+          Tytuł : 
           <input
             type="text"
             value={title}
@@ -62,7 +62,7 @@ const AddBookForm = ({ addBook }) => {
           />
         </label>
         <br />
-        <label>
+        <label >
           Autor:
           <input
             type="text"

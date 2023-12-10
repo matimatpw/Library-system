@@ -48,6 +48,14 @@ button {
   color:  #000;
 }
 
+option {
+  /* font-size: 10px; */
+  font-weight: 700;
+  color: black;
+  background-color: burlywood;
+  color: black;
+}
+
 button.add {
   background-color: #e83eBc;
 }
