@@ -44,12 +44,12 @@ button {
   font-size: 30px;
   border-radius: 5%;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  background-color: burlywood;
+  color:  #000;
 }
 
 button.add {
-  /* background-color: #e83eBc; */
-  background-color: burlywood;
-  color:  #000;
+  background-color: #e83eBc;
 }
 
 button.delete {
