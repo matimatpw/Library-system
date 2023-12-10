@@ -43,6 +43,13 @@ public class BookService {
         }
         bookRepository.save(book);
         return book;
+    }
 
+    public void deleteBook(String isbn) {
+        boolean exists = bookRepository.existsById(isbn);
+        if (!exists) {
+            throw new IllegalStateException("Book with isbn " + isbn + " does not exist");
+        }
+        bookRepository.deleteById(isbn);
     }
 }

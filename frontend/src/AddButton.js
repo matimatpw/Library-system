@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react';
+import AddBookForm from './AddBookForm';
 
-function AddButton({type}) {
+function AddButton() {
+  const [showForm, setShowForm] = useState(false);
+
+  const handleToggleForm = () => {
+    setShowForm(!showForm);
+  };
+
   return (
-    <button className={type}>{type}</button>
-  )
+    <div>
+      <button className="add" onClick={handleToggleForm}>
+        Add Book
+      </button>
+      {showForm && <AddBookForm />}
+    </div>
+  );
 }
 
-export default AddButton
+export default AddButton;
