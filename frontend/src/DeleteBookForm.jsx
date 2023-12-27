@@ -47,18 +47,19 @@ const DeleteBookForm = ({ deleteBook, books }) => {
   return (
     <div>
       <h2>Usuń Książkę</h2>
+      
+      {console.log("Books in App component:", books)}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <label>
         Wybierz książkę do usunięcia:
         <select
           value={selectedBook}
-          onChange={(e) => setSelectedBook(e.target.value)}
-        >
-          <option value="">Wybierz książkę</option>
-          {books.map((book) => (
-            <option key={book.isbn} value={book.isbn}>
-              {book.title} - {book.isbn}
-            </option>
+          onChange={(e) => setSelectedBook(e.target.value)}>
+            <option value="">Wybierz książkę</option>
+            {Array.isArray(booksList) && booksList.map((book) => (
+              <option key={book.isbn} value={book.isbn}>
+                {book.title} - {book.isbn}
+              </option>
           ))}
         </select>
       </label>

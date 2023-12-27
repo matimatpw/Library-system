@@ -54,9 +54,10 @@ body {
     color:  #000;
   }
   
-  button.delete {
-    background-color: burlywood;
-    color: black;
+ .btn-primary {
+    background-color: peachpuff !important;
+    border-color: tan !important; 
+    color: black !important;
   }
   
   .author
@@ -71,4 +72,13 @@ body {
   .list-group-item:hover {
     background-color: rgb(230, 172, 102) !important;
     cursor: pointer;
+  }
+
+  .bottom-container {
+    width: 760px;
+    margin-left: 9.5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
   }

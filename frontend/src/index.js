@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import './index.css';
 import App from './App';
-import AddBookForm from './AddBookForm'; // Import your AddBookForm component
+import AddBookForm from './AddBookForm';
 import reportWebVitals from './reportWebVitals';
-import DeleteBookForm from "./DeleteBookForm";
+import DeleteBookForm from './DeleteBookForm';
 
 
 export default function AppIndex() {
