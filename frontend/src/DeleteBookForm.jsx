@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const DeleteBookForm = ({ deleteBook }) => {
+const DeleteBookForm = ({ deleteBook, books }) => {
   const [selectedBook, setSelectedBook] = useState('');
   const [booksList, setBooksList] = useState([]);
   const [error, setError] = useState(null);
@@ -32,6 +32,7 @@ const DeleteBookForm = ({ deleteBook }) => {
 
       setSelectedBook('');
       setError(null);
+      
     } catch (error) {
       console.error('Error deleting book:', error);
 
@@ -54,7 +55,7 @@ const DeleteBookForm = ({ deleteBook }) => {
           onChange={(e) => setSelectedBook(e.target.value)}
         >
           <option value="">Wybierz książkę</option>
-          {booksList.map((book) => (
+          {books.map((book) => (
             <option key={book.isbn} value={book.isbn}>
               {book.title} - {book.isbn}
             </option>

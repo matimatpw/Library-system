@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 const AddBookForm = ({ addBook }) => {
   const [title, setTitle] = useState('');
@@ -49,40 +50,40 @@ const AddBookForm = ({ addBook }) => {
   };
 
   return (
-    <div>
-      <h2>Dodaj Książkę</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Tytuł : 
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </label>
-        <br />
-        <label >
-          Autor:
-          <input
-            type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          ISBN:
-          <input
-            type="text"
-            value={isbn}
-            onChange={(e) => setIsbn(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Dodaj Książkę</button>
-      </form>
-    </div>
+      <div>
+        <h2>Dodaj Książkę</h2>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <label>
+            Tytuł : 
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </label>
+          <br />
+          <label >
+            Autor:
+            <input
+              type="text"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+            />
+          </label>
+          <br />
+          <label>
+            ISBN:
+            <input
+              type="text"
+              value={isbn}
+              onChange={(e) => setIsbn(e.target.value)}
+            />
+          </label>
+          <br />
+          <button type="submit">Dodaj Książkę</button>
+        </form>
+      </div>
   );
 };
 

@@ -13,7 +13,6 @@ function DeleteButton() {
       <button className="delete" onClick={handleToggleForm}>
         Delete Book
       </button>
-      {showForm && <DeleteBookForm />}
     </div>
   );
 }

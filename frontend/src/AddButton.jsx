@@ -13,7 +13,6 @@ function AddButton() {
       <button className="add" onClick={handleToggleForm}>
         Add Book
       </button>
-      {showForm && <AddBookForm />}
     </div>
   );
 }
