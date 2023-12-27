@@ -33,9 +33,9 @@ const BookList = ({books}) => {
     return (
       <React.Fragment>
         <header>Book List</header>
-        <ul class="list-group">
+        <ul className="list-group">
           {books.map((book) => (
-            <li key={book.isbn} class="list-group-item">
+            <li key={book.isbn} className="list-group-item">
               <strong>Title:</strong> {book.title}<br />
               <strong>Author:</strong> {book.author}<br />
               <strong>ISBN:</strong> {book.isbn}

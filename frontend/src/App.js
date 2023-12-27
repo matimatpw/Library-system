@@ -47,26 +47,26 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div class="container">
+        <div className="container">
           <div className="row">
-              <div class="col-1"></div>
-              <div class="col-10"> <BookList
+              <div className="col-1"></div>
+              <div className="col-10"> <BookList
               books={this.state.books}
               /> </div>
-              <div class="col-1"></div>
+              <div className="col-1"></div>
           </div>
 
           <div className="row">
-            <div class="col-1"> </div>
-            <div class="col-1">
+            <div className="col-1"> </div>
+            <div className="col-1">
             <button onClick={() => this.handleToggleForm("isAddFormVisible")}>
               Add Book
             </button>
             </div>
 
-            <div class="col-7"> </div>
+            <div className="col-7"> </div>
 
-            <div class="col-1">
+            <div className="col-1">
             {this.state.isAddFormVisible && <AddBookForm addBook={this.addBook} />}
             <button onClick={() => this.handleToggleForm("isDeleteFormVisible")}>
               Delete Book
