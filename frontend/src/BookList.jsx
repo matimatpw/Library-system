@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import './BookList.css';
 
 const BookList = ({books}) => {
 
@@ -33,15 +34,15 @@ const BookList = ({books}) => {
     return (
       <React.Fragment>
         <header>Book List</header>
-        <ul className="list-group">
-          {books.map((book) => (
-            <li key={book.isbn} className="list-group-item">
-              <strong>Title:</strong> {book.title}<br />
-              <strong>Author:</strong> {book.author}<br />
-              <strong>ISBN:</strong> {book.isbn}
-            </li>
-          ))}
-        </ul>
+          <ul className="list-group">
+            {books.map((book) => (
+              <li key={book.isbn} className="list-group-item">
+                <strong>Title:</strong> {book.title}<br />
+                <strong>Author:</strong> {book.author}<br />
+                <strong>ISBN:</strong> {book.isbn}
+              </li>
+            ))}
+          </ul>
       </React.Fragment>
     );
   }
