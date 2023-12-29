@@ -1,0 +1,18 @@
+header {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 46px;
+    font-weight: bold;
+    color: #333; /* Kolor tekstu */
+    text-align: center;
+    margin-bottom: 20px; /* Odstęp od innych elementów */
+    text-transform: uppercase; /* Zmiana na wielkie litery */
+}
+
+.list-group-item {
+    background-color: peachpuff !important;
+}
+  
+.list-group-item:hover {
+    background-color: rgb(230, 172, 102) !important;
+    cursor: pointer;
+}

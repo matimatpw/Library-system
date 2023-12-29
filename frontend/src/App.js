@@ -1,23 +1,12 @@
-import React from 'react';
-import BookList from './BookList';
-import AddButton from './AddButton';
-import './App.css';
+import React, { Component } from 'react';
+import Main from "./Main";
 
-class App extends React.Component {
-    render() {
-        return (
-            <div className='App'>
-                <header>
-                   Book List
-                </header>
-                <BookList />
-                <span>
-                    <AddButton type={"add"}/>
-                    <AddButton type={"delete"}/>
-                </span>
-            </div>
-        );
-    }
+class App extends Component {
+  render() {
+    return (
+    <Main />
+    );
+  }
 }
 
 export default App;

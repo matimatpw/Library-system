@@ -9,6 +9,7 @@ import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -31,14 +32,27 @@ public class BookController {
     }
 
 
-    @PostMapping("/add")
+    @PostMapping("/create")
     public ResponseEntity<Book> createBook(@RequestBody Map<String, String> payload){
         return new ResponseEntity<Book>(bookService.createNewBook(payload.get("isbn"), payload.get("title"),payload.get("author")), HttpStatus.CREATED);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Book> addNewBook(@RequestBody Book book){
         return new ResponseEntity<Book>(bookService.addNewBook(book), HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/delete/{isbn}")
+    public ResponseEntity<String> deleteBook(@PathVariable String isbn){
+        try {
+            bookService.deleteBook(isbn);
+            return new ResponseEntity<>("Book with ISBN " + isbn + " deleted", HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>("Book with ISBN " + isbn + " not found", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error deleting book: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }
