@@ -1,33 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital@1&display=swap');
+
 body {
-  background-color: bisque;
-  font-family: Arial;
-  padding: 60px 0;
-}
+    background-color: bisque !important;
+    font-family: "Regular 400 Italic" !important;
+    padding: 60px 0;
+  }
 
 .App {
   text-align: center;
 }
 
-
-.App header {
-  font-size: 50px;
-  font-weight: 700;
-  color: black;
-}
-
-.BookList ul {
+/* .BookList ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   font-size: 20px;
-  line-height: 1; /* odstęp miedzy liniami */
+  line-height: 1; /* odstęp miedzy liniami *|
   margin: 80px;
   margin-bottom: 150px;
   border: 5px solid transparent;
   background-color: burlywood;
   border-color: tan;
-}
+} */
 
 .App span {
   display: flex;
@@ -52,13 +47,22 @@ button.add {
   color:  #000;
 }
 
-button.delete {
-  background-color: burlywood;
-  color: black;
+.btn-primary {
+  background-color: peachpuff !important;
+  border-color: rgb(252, 210, 156) !important; 
+  color: black !important;
 }
 
-.author
+/* .author
 {
-  font-weight: 'bold' 
-}
+  font-weight: 'bold';
+} */
 
+.bottom-container {
+  width: 760px;
+  margin-left: 9.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
