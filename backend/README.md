@@ -8,7 +8,7 @@ Aplikacja służąca do zarządzania biblioteką. System ten ma na celu usprawni
 ### Aplikacja korzysta z poniższych technologii:
 - Java (Spring Boot)
 - React
-- Baza danych: (*do ustalenia*)
+- Baza danych: PostgreSQL
 
 
 ### Podstawowe funkcje systemu:
