@@ -16,10 +16,16 @@ public class  Book {
     private String isbn;
     private String title;
     private String author;
+    private String isBorrowed;
 
     public Book(String isbn, String title, String author) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
+        this.isBorrowed = "false";
+    }
+
+    public void setIsBorrowed(String isBorrowed) {
+        this.isBorrowed = isBorrowed;
     }
 }
