@@ -52,4 +52,11 @@ public class BookService {
         }
         bookRepository.deleteById(isbn);
     }
+
+    public Book updateBookStatus(String isbn, String isBorrowed) {
+        Book book = bookRepository.findById(isbn).orElseThrow(() -> new IllegalStateException("Book with isbn " + isbn + " does not exist"));
+        book.setIsBorrowed(isBorrowed);
+        bookRepository.save(book);
+        return book;
+    }
 }
