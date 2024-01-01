@@ -88,6 +88,7 @@ class Books extends Component {
     const { totalCount, data: books } = this.getPagedData();
 
     return (
+      <container>
       <div className="row">
         <div className="col-3">
           <ListGroup
@@ -114,13 +115,13 @@ class Books extends Component {
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
           />
-          <Window
+        </div>
+      </div>
+      <Window
           showModal={this.state.showModal}
           onRequestClose={this.handleCloseModal}
           />
-        </div>
-      </div>
-
+      </container>
     );
   }
 }
