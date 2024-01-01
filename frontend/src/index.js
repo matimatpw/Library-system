@@ -1,28 +1,33 @@
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import React from 'react';
-import './index.css';
-import App from './App';
-import AddBookForm from './AddBookForm';
-import reportWebVitals from './reportWebVitals';
-import DeleteBookForm from './DeleteBookForm';
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from "react";
+import "./index.css";
+import App from "./App";
+import AddBookForm from "./AddBookForm";
+import reportWebVitals from "./reportWebVitals";
+import DeleteBookForm from "./DeleteBookForm";
+import NavBar from "./components/navBar";
+import LoginForm from "./components/loginForm";
 
 export default function AppIndex() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />}></Route>
-        <Route path="/addbookform" element={<AddBookForm />} ></Route>
-        <Route path="/deletebookform" element={<DeleteBookForm />} ></Route>
-      </Routes>
-    </Router>
+    <React.Fragment>
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<App />}></Route>
+          <Route path="/login" element={<LoginForm />}></Route>
+          <Route path="/addbookform" element={<AddBookForm />}></Route>
+          <Route path="/deletebookform" element={<DeleteBookForm />}></Route>
+        </Routes>
+      </Router>
+    </React.Fragment>
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AppIndex />
+  <AppIndex />,
   // <React.StrictMode>
   //   <App />
   // </React.StrictMode>
