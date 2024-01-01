@@ -4,7 +4,6 @@ import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
-import Window from "./window";
 
 class Books extends Component {
   state = {
@@ -13,15 +12,6 @@ class Books extends Component {
     currentPage: 1,
     pageSize: 4,
     sortColumn: { path: "title", order: "asc" },
-    showModal: false
-  };
-
-  handleOpenModal = () => {
-    this.setState({ showModal: true });
-  };
-
-  handleCloseModal = () => {
-    this.setState({ showModal: false });
   };
 
   getGenres() {
@@ -104,9 +94,6 @@ class Books extends Component {
             // onLike={this.handleLike}
             // onDelete={this.handleDelete}
             onSort={this.handleSort}
-
-            showModal={this.state.showModal}
-            handleOpenModal={this.handleOpenModal}
           />
           <Pagination
             itemsCount={totalCount}
@@ -114,13 +101,8 @@ class Books extends Component {
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
           />
-          <Window
-          showModal={this.state.showModal}
-          onRequestClose={this.handleCloseModal}
-          />
         </div>
       </div>
-
     );
   }
 }

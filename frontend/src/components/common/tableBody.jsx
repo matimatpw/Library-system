@@ -24,8 +24,6 @@ class TableBody extends Component {
                 {this.renderCell(item, column)}
               </td>
             ))}
-            <td>
-            </td>
           </tr>
         ))}
       </tbody>
