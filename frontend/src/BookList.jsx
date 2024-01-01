@@ -37,9 +37,10 @@ const BookList = ({books}) => {
           <ul className="list-group">
             {books.map((book) => (
               <li key={book.isbn} className="list-group-item">
-                <strong>Title:</strong> {book.title}<br />
-                <strong>Author:</strong> {book.author}<br />
+                <strong>Title:</strong> {book.title}
+                <strong>Author:</strong> {book.author}
                 <strong>ISBN:</strong> {book.isbn}
+                <strong>isBorrowed:</strong> {book.isBorrowed}
               </li>
             ))}
           </ul>
