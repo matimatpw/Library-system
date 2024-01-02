@@ -10,6 +10,9 @@ const GoogleCalendar = () => {
 
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
+  
+  const [eventName, setEventname] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
 
   const googleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
@@ -28,6 +31,49 @@ const GoogleCalendar = () => {
     await supabase.auth.signOut();
   };
 
+  async function createCalendarEvent() {
+    console.log("createCalendarEvent");
+  
+    const event = {
+      'summary': eventName,
+      'description': eventDescription,
+      'start': {
+        'dateTime': start.toISOString(),
+        'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+      'end': {
+        'dateTime': end.toISOString(),
+        'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+    };
+  
+    try {
+      const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + session.provider_token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(event),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(`Failed to create event: ${JSON.stringify(data)}`);
+      }
+  
+      console.log(data);
+      alert("Event created!");
+    } catch (error) {
+      console.error('Error creating calendar event:', error);
+      // Handle the error appropriately, e.g., show an error message to the user.
+    }
+  }
+  
+  console.log(eventName)
+  console.log(eventDescription)
+
   return (
     <div>
       <h2>Google Calendar</h2>
@@ -41,8 +87,14 @@ const GoogleCalendar = () => {
           <div>
             <p>END of your event</p>
             <DatePicker selected={end} onChange={(date) => setEnd(date)} />
+            <p>Event Name</p>
+            <input type="text" value={eventName} onChange={(e) => setEventname(e.target.value)} />
+            <p>Event Description</p>
+            <input type="text" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} />
+            <hr />
+            <button onClick={createCalendarEvent}>Create Calendar Event!</button>
+            <p></p>
           </div>
-          {/* Add similar code for the end date if needed */}
 
           <button onClick={signOut}>Sign out</button>
         </>
