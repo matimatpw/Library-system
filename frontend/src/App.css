@@ -47,6 +47,11 @@
 /*  color:  #000;*/
 /*}*/
 
+button.signin {
+  background-color: burlywood;
+  color:  #000;
+}
+
 /*.btn-primary {*/
 /*  background-color: peachpuff !important;*/
 /*  border-color: rgb(252, 210, 156) !important;*/
