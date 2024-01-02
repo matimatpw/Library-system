@@ -3,6 +3,7 @@ import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 import DatePicker from 'react-datepicker';
 import { useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
+import './App.css';
 
 const GoogleCalendar = () => {
   const session = useSession();
@@ -46,8 +47,16 @@ const GoogleCalendar = () => {
         'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
       },
     };
+
+    
   
     try {
+      if(event.start.dateTime > event.end.dateTime) {
+        throw new Error("Start date is after end date");
+      }
+      if(event.summary === "") {
+        throw new Error("Event name is empty");
+      }
       const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
         method: 'POST',
         headers: {
@@ -67,7 +76,8 @@ const GoogleCalendar = () => {
       alert("Event created!");
     } catch (error) {
       console.error('Error creating calendar event:', error);
-      // Handle the error appropriately, e.g., show an error message to the user.
+
+      alert(error.message); //TODO handle error
     }
   }
   
@@ -79,14 +89,15 @@ const GoogleCalendar = () => {
       <h2>Google Calendar</h2>
       {session ? (
         <>
-          <h2>Hey there, {session.user.email}!</h2>
+          <h2>Hey there, {session.user.email.split('@')[0]}!</h2>
           <div>
             <p>START of your event</p>
             <DatePicker selected={start} onChange={(date) => setStart(date)} />
-          </div>
-          <div>
             <p>END of your event</p>
             <DatePicker selected={end} onChange={(date) => setEnd(date)} />
+          </div>
+          <hr />
+          <div>
             <p>Event Name</p>
             <input type="text" value={eventName} onChange={(e) => setEventname(e.target.value)} />
             <p>Event Description</p>
@@ -96,10 +107,10 @@ const GoogleCalendar = () => {
             <p></p>
           </div>
 
-          <button onClick={signOut}>Sign out</button>
+          <button className='signin' onClick={signOut}> Sign out</button>
         </>
       ) : (
-        <button onClick={googleSignIn}>Sign In with Google to see calendar</button>
+        <button className='signin' onClick={googleSignIn}>Sign In with Google to see calendar</button>
       )}
 
     </div>
