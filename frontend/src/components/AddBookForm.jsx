@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../css/BookForm.css";
 
 const AddBookForm = ({ addBook }) => {
   const [title, setTitle] = useState("");
@@ -49,41 +50,60 @@ const AddBookForm = ({ addBook }) => {
   };
 
   return (
-    <div>
-      <h2>Add book</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Tytuł :
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Autor:
-          <input
-            type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          ISBN:
-          <input
-            type="text"
-            value={isbn}
-            onChange={(e) => setIsbn(e.target.value)}
-          />
-        </label>
-        <br />
-        <button className="btn btn-primary" type="submit">
-          Add book
-        </button>
-      </form>
+      <div className="container-2">
+        <h2>Add book</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="row g-3 row-g-3">
+            <div className="col-3">
+              <label for="title" className="form-label">Title</label>
+            </div>
+            <div className="col-9">
+              <span><input
+                type="text"
+                className="form-control"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              </span>
+            </div>
+          </div>
+          <div className="row g-3 row-g-3">
+            <div className="col-3">
+              <label for="author" className="form-label">Author</label>
+            </div>
+            <div className="col-9">
+              <span><input
+                type="text"
+                className="form-control"
+                id="author"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+              />
+              </span>
+            </div>
+          </div>
+          <div className="row g-3 row-g-3">
+            <div className="col-3">
+              <label for="isbn" className="form-label">ISBN</label>
+            </div>
+            <div className="col-9">
+              <span><input
+                type="text"
+                className="form-control"
+                id="isbn"
+                value={isbn}
+                onChange={(e) => setIsbn(e.target.value)}
+              />
+              </span>
+            </div>
+          </div>
+          <br />
+              {error && <p style={{ color: "red" }}>{error}</p>}
+              <button className="btn btn-primary" type="submit">
+                Add book
+              </button>
+        </form>
     </div>
   );
 };

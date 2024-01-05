@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import '../css/BookForm.css'
 
 const DeleteBookForm = ({ deleteBook, books }) => {
   const [selectedBook, setSelectedBook] = useState("");
@@ -45,27 +46,28 @@ const DeleteBookForm = ({ deleteBook, books }) => {
   };
 
   return (
-    <div>
-      <h2>Delete book</h2>
-
+    <div className="container-2">
+              <h2>Delete book</h2>
       {/*{console.log("Books in App component:", books)}*/}
       {/*{error && <p style={{ color: "red" }}>{error}</p>}*/}
-      <label>
-        Wybierz książkę do usunięcia:
-        <select
-          className="form-select"
-          value={selectedBook}
-          onChange={(e) => setSelectedBook(e.target.value)}
-        >
-          <option value="">Wybierz książkę</option>
-          {Array.isArray(booksList) &&
-            booksList.map((book) => (
-              <option key={book.isbn} value={book.isbn}>
-                {book.title} - {book.isbn}
-              </option>
-            ))}
-        </select>
-      </label>
+      <div className="row g-3">
+        <label>
+          Wybierz książkę do usunięcia:
+          <select
+            className="form-select"
+            value={selectedBook}
+            onChange={(e) => setSelectedBook(e.target.value)}
+          >
+            <option value="">Wybierz książkę</option>
+            {Array.isArray(booksList) &&
+              booksList.map((book) => (
+                <option key={book.isbn} value={book.isbn}>
+                  {book.title} - {book.isbn}
+                </option>
+              ))}
+          </select>
+        </label>
+        </div>
       <br />
       <button className="btn btn-primary" onClick={handleDelete}>
         Delete
