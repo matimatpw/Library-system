@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const DeleteBookForm = ({ deleteBook, books }) => {
   const [selectedBook, setSelectedBook] = useState("");
   const [booksList, setBooksList] = useState([]);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:8080/books")
@@ -28,30 +28,32 @@ const DeleteBookForm = ({ deleteBook, books }) => {
         throw new Error("Nie udało się usunąć książki.");
       }
 
-      deleteBook(selectedBook);
+      // deleteBook(selectedBook);
+      setBooksList(booksList.filter((book) => book.isbn !== selectedBook));
 
       setSelectedBook("");
-      setError(null);
+      // setError(null);
     } catch (error) {
       console.error("Error deleting book:", error);
 
-      if (error.message.includes("Book not found")) {
-        setError("Książka o podanym ISBN nie istnieje.");
-      } else {
-        setError("Wystąpił błąd podczas usuwania książki.");
-      }
+      // if (error.message.includes("Book not found")) {
+      //   setError("Książka o podanym ISBN nie istnieje.");
+      // } else {
+      //   setError("Wystąpił błąd podczas usuwania książki.");
+      // }
     }
   };
 
   return (
     <div>
-      <h2>Usuń Książkę</h2>
+      <h2>Delete book</h2>
 
       {/*{console.log("Books in App component:", books)}*/}
       {/*{error && <p style={{ color: "red" }}>{error}</p>}*/}
       <label>
         Wybierz książkę do usunięcia:
         <select
+          className="form-select"
           value={selectedBook}
           onChange={(e) => setSelectedBook(e.target.value)}
         >
@@ -65,7 +67,9 @@ const DeleteBookForm = ({ deleteBook, books }) => {
         </select>
       </label>
       <br />
-      <button onClick={handleDelete}>Usuń Książkę</button>
+      <button className="btn btn-primary" onClick={handleDelete}>
+        Delete
+      </button>
     </div>
   );
 };

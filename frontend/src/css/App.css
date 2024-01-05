@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital@1&display=swap');
-@import './colors.css';
+@import 'colors.css';
 
 body {
     background-color: var(--page-body-color) !important;

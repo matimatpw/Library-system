@@ -1,4 +1,4 @@
-@import './colors.css';
+@import 'colors.css';
 
 .active>.page-link {
     position: relative;
