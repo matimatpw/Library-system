@@ -1,0 +1,12 @@
+:root {
+    --dark-color: #4c4d4c; /*#4c4d4c*/
+
+    --border-color: #4c4d4c; /*kolor obwódki przyciskow aktywnych*/
+    --page-body-color: grey; /*grey*/
+
+    --button-background-color: lightgrey; /*lightgrey*/
+    --button-border-color: grey; /*grey*/
+    --button-text-color: black; /*black*/
+
+    --nav-bar-background-color: #4c4d4c; /*#4c4d4c*/
+}

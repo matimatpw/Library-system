@@ -9,7 +9,7 @@ import java.util.List;
 @Configuration
 public class BookConfig {
 
-    @Bean
+    @Bean(name = "book")
     CommandLineRunner commandLineRunner(BookRepository bookRepository) {
         return args -> bookRepository.saveAll(
                 List.of(
@@ -19,7 +19,7 @@ public class BookConfig {
                                 "J. R. R. Tolkien"
                         ),
                         new Book(
-                                "978-3-16-148410-1",
+                                "978-3-16-148410-2",
                                 "The Lord of the Rings 2",
                                 "J. R. R. Tolkien"
                         ),
@@ -34,10 +34,10 @@ public class BookConfig {
                                 "J. R. R. Tolkien"
                         ),
                         new Book(
-                                        "978-3-16-148410-5",
-                                        "The Lord of the Rings 5",
-                                        "J. R. R. Tolkien"
-                                ),
+                                "978-3-16-148410-5",
+                                "The Lord of the Rings 5",
+                                "J. R. R. Tolkien"
+                        ),
                         new Book(
                                 "978-3-16-148410-6",
                                 "The Lord of the Rings 6",

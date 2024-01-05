@@ -25,7 +25,4 @@ public class  Book {
         this.isBorrowed = "false";
     }
 
-    public void setIsBorrowed(String isBorrowed) {
-        this.isBorrowed = isBorrowed;
-    }
 }
