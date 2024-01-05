@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import Table from "./common/table";
-import BorrowButton from "./common/BorrowButton";
-import Modal from 'react-modal';
-import Window from "./window";
 
 class BooksTable extends Component {
 
@@ -14,11 +11,14 @@ class BooksTable extends Component {
       key: "borrow",
       content: (book) => (
         <div>
-          <button className="btn btn-primary" onClick={this.props.handleOpenModal}>Borrow</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => this.props.handleOpenModal(book.isbn)}
+          >
+            Borrow</button>
         </div>
       ),
     },
-    { path: "isBorrowed", label: "isBorrowed" }
   ];
 
   render() {

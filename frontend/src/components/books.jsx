@@ -5,6 +5,7 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 import Window from "./window";
+import "../books.css";
 
 class Books extends Component {
   state = {
@@ -16,8 +17,9 @@ class Books extends Component {
     showModal: false
   };
 
-  handleOpenModal = () => {
-    this.setState({ showModal: true });
+  handleOpenModal = (isbn) => {
+    console.log('Przekazano ISBN:', isbn);
+    this.setState({ showModal: true, isbn: isbn});
   };
 
   handleCloseModal = () => {
@@ -90,7 +92,14 @@ class Books extends Component {
     return (
       <container>
       <div className="row">
-        <div className="col-3">
+        <div className="col-2">
+        </div>
+        <div className="col">
+        <p>Showing {totalCount} books in the database.</p>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-2">
           <ListGroup
             items={this.state.genres}
             selectedItem={this.state.selectedGenre}
@@ -98,7 +107,6 @@ class Books extends Component {
           />
         </div>
         <div className="col">
-          <p>Showing {totalCount} books in the database.</p>
           <BooksTable
             books={books}
             sortColumn={sortColumn}
@@ -118,9 +126,10 @@ class Books extends Component {
         </div>
       </div>
       <Window
-          showModal={this.state.showModal}
-          onRequestClose={this.handleCloseModal}
-          />
+        showModal={this.state.showModal}
+        onRequestClose={this.handleCloseModal}
+        isbn={this.state.isbn}
+      />
       </container>
     );
   }

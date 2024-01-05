@@ -18,8 +18,8 @@ public class EmailApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void triggerMail() {
-        service.sendEmail("adamf17.01@gmail.com",
-                "Spring boot email",
-                "Hello world");
+//        service.sendEmail("adamf17.01@gmail.com",
+//                "Spring boot email",
+//                "Hello world");
     }
 }
