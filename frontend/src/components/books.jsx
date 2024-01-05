@@ -92,6 +92,12 @@ class Books extends Component {
     return (
       <div className="container">
         <div className="row">
+          <div className="col-3" />
+          <div className="col">
+            <p>Showing {totalCount} books in the database.</p>
+          </div>
+        </div>
+        <div className="row">
           <div className="col-3">
             <ListGroup
               items={this.state.genres}
@@ -100,7 +106,6 @@ class Books extends Component {
             />
           </div>
           <div className="col">
-            <p>Showing {totalCount} books in the database.</p>
             <BooksTable
               books={books}
               sortColumn={sortColumn}
