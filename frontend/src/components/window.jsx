@@ -7,7 +7,7 @@ class Window extends Component {
   state = {
     bookCopies: [],
     sortColumn: { path: "title", order: "asc" },
-  } 
+  }
 
   componentDidMount() {
     Modal.setAppElement('#root'); // Ustawienie elementu aplikacji na div z id "root"
@@ -50,11 +50,11 @@ class Window extends Component {
         },
         body: JSON.stringify({ "isBorrowed": true })
       });
-  
+
       if (!response.ok) {
         throw new Error('Nie udało się wypożyczyć książki.');
       }
-  
+
       console.log('Book copy updated successfully:', response);
     } catch (error) {
       console.error('Error updating book copy:', error.message);

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../listGroup.css";
+import "../../css/listGroup.css";
 
 const ListGroup = ({
   items,
@@ -15,7 +15,9 @@ const ListGroup = ({
           onClick={() => onItemSelect(item)}
           key={item[valueProperty]}
           className={
-            (index === 0 && !selectedItem) || item === selectedItem ? "list-group-item active" : "list-group-item"
+            (index === 0 && !selectedItem) || item === selectedItem
+              ? "list-group-item active"
+              : "list-group-item"
           }
         >
           {item[textProperty]}

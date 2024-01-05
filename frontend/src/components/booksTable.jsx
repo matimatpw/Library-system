@@ -10,27 +10,27 @@ class BooksTable extends Component {
     {
       key: "borrow",
       content: (book) => (
-        <div>
           <button
             className="btn btn-primary"
             onClick={() => this.props.handleOpenModal(book.isbn)}
           >
-            Borrow</button>
-        </div>
+            Borrow
+          </button>
       ),
     },
+    { path: "isBorrowed", label: "isBorrowed" },
   ];
 
   render() {
     const { books, onSort, sortColumn } = this.props;
 
     return (
-        <Table
-          columns={this.columns}
-          data={books}
-          sortColumn={sortColumn}
-          onSort={onSort}
-        />
+      <Table
+        columns={this.columns}
+        data={books}
+        sortColumn={sortColumn}
+        onSort={onSort}
+      />
     );
   }
 }

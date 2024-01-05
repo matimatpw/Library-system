@@ -5,7 +5,7 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 import Window from "./window";
-import "../books.css";
+import "../css/books.css";
 
 class Books extends Component {
   state = {
@@ -14,12 +14,12 @@ class Books extends Component {
     currentPage: 1,
     pageSize: 4,
     sortColumn: { path: "title", order: "asc" },
-    showModal: false
+    showModal: false,
   };
 
   handleOpenModal = (isbn) => {
-    console.log('Przekazano ISBN:', isbn);
-    this.setState({ showModal: true, isbn: isbn});
+    console.log("Przekazano ISBN:", isbn);
+    this.setState({ showModal: true, isbn: isbn });
   };
 
   handleCloseModal = () => {
@@ -90,47 +90,38 @@ class Books extends Component {
     const { totalCount, data: books } = this.getPagedData();
 
     return (
-      <container>
-      <div className="row">
-        <div className="col-2">
+      <div className="container">
+        <div className="row">
+          <div className="col-3">
+            <ListGroup
+              items={this.state.genres}
+              selectedItem={this.state.selectedGenre}
+              onItemSelect={this.handleGenreSelect}
+            />
+          </div>
+          <div className="col">
+            <p>Showing {totalCount} books in the database.</p>
+            <BooksTable
+              books={books}
+              sortColumn={sortColumn}
+              onSort={this.handleSort}
+              showModal={this.state.showModal}
+              handleOpenModal={this.handleOpenModal}
+            />
+            <Pagination
+              itemsCount={totalCount}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={this.handlePageChange}
+            />
+          </div>
         </div>
-        <div className="col">
-        <p>Showing {totalCount} books in the database.</p>
-        </div>
+        <Window
+          showModal={this.state.showModal}
+          onRequestClose={this.handleCloseModal}
+          isbn={this.state.isbn}
+        />
       </div>
-      <div className="row">
-        <div className="col-2">
-          <ListGroup
-            items={this.state.genres}
-            selectedItem={this.state.selectedGenre}
-            onItemSelect={this.handleGenreSelect}
-          />
-        </div>
-        <div className="col">
-          <BooksTable
-            books={books}
-            sortColumn={sortColumn}
-            // onLike={this.handleLike}
-            // onDelete={this.handleDelete}
-            onSort={this.handleSort}
-
-            showModal={this.state.showModal}
-            handleOpenModal={this.handleOpenModal}
-          />
-          <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
-          />
-        </div>
-      </div>
-      <Window
-        showModal={this.state.showModal}
-        onRequestClose={this.handleCloseModal}
-        isbn={this.state.isbn}
-      />
-      </container>
     );
   }
 }

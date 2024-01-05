@@ -1,7 +1,7 @@
 import React from "react";
 import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
-import "../../table.css";
+import "../../css/table.css";
 
 const Table = ({ columns, sortColumn, onSort, data }) => {
   return (

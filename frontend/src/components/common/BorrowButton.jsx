@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
+import React from "react";
 
 function BorrowButton() {
-    return (
-        <div>
-        <button className="btn btn-primary" >
-            Borrow
-        </button>
-        </div>
-    );
+  return <button className="btn btn-primary">Borrow</button>;
 }
 
 export default BorrowButton;
