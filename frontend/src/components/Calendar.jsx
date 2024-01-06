@@ -10,7 +10,7 @@ const GoogleCalendar = () => {
 
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
-  
+
   const [eventName, setEventname] = useState("");
   const [eventDescription, setEventDescription] = useState("");
 
@@ -33,7 +33,7 @@ const GoogleCalendar = () => {
 
   async function createCalendarEvent() {
     console.log("createCalendarEvent");
-  
+
     const event = {
       'summary': eventName,
       'description': eventDescription,
@@ -47,8 +47,8 @@ const GoogleCalendar = () => {
       },
     };
 
-    
-  
+
+
     try {
       if(event.start.dateTime > event.end.dateTime) {
         throw new Error("Start date is after end date");
@@ -64,13 +64,13 @@ const GoogleCalendar = () => {
         },
         body: JSON.stringify(event),
       });
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
         throw new Error(`Failed to create event: ${JSON.stringify(data)}`);
       }
-  
+
       console.log(data);
       alert("Event created!");
     } catch (error) {
@@ -79,7 +79,7 @@ const GoogleCalendar = () => {
       alert(error.message); //TODO handle error
     }
   }
-  
+
   console.log(eventName)
   console.log(eventDescription)
 

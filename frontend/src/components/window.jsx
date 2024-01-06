@@ -14,6 +14,14 @@ class Window extends Component {
   }
 
   borrowBook = (bookcopy) => {
+
+
+    if (!this.props.session) {
+      window.location.href = '/calendar';
+      return;
+    }
+
+
     if (bookcopy.isBorrowed) {
       alert("Book is already borrowed");
       return;
@@ -67,7 +75,7 @@ class Window extends Component {
 
   render() {
 
-    const { length: count } = this.state.bookCopies;
+    // const { length: count } = this.state.bookCopies;
     const { sortColumn } = this.state;
 
     // if (count === 0) return <p>There are no books in the database.</p>;
