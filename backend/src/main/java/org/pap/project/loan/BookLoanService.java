@@ -14,16 +14,14 @@ public class BookLoanService {
     private final BookLoanRepository bookLoanRepository;
 
     @Autowired
-    public BookLoanService(BookLoanRepository bookLoanRepository){
-        this.bookLoanRepository = bookLoanRepository;
-    }
+    public BookLoanService(BookLoanRepository bookLoanRepository) {this.bookLoanRepository = bookLoanRepository;}
 
     public List<BookLoan> allBookLoans(){
         return bookLoanRepository.findAll();
     }
 
-    public List<BookLoan> allUserLoans(@RequestParam(value = "userId") Integer userId){
-        return bookLoanRepository.findAllUserLoans(userId);
+    public List<BookLoan> allUserLoans(@RequestParam(value = "userid")Integer userid){
+        return bookLoanRepository.findAllByUserId(userid);
     }
 
 

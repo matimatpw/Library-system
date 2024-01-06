@@ -1,7 +1,6 @@
 package org.pap.project.loan;
 
 import org.pap.project.book.Book;
-import org.pap.project.copy.BookCopyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +24,8 @@ public class BookLoanController {
         return new ResponseEntity<List<BookLoan>>(bookLoanService.allBookLoans(),HttpStatus.OK);
     }
 
-    @GetMapping("/userId/{userId}")
-    public ResponseEntity<List<BookLoan>> getAllUserLoans(@PathVariable Integer userId){
-        return new ResponseEntity<List<BookLoan>>(bookLoanService.allUserLoans(userId), HttpStatus.OK);
+    @GetMapping("/userid/{userid}")
+    public ResponseEntity<List<BookLoan>> getAllUserLoans(@PathVariable Integer userid){
+        return new ResponseEntity<List<BookLoan>>(bookLoanService.allUserLoans(userid), HttpStatus.OK);
     }
 }

@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookLoanRepository extends JpaRepository<BookLoan, Integer> {
-    List<BookLoan> findAllUserLoans(Integer userId);
+    List<BookLoan> findAllByUserId(Integer userId);
 }
