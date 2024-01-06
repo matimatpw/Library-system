@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Date;
 import java.util.List;
 
 @Configuration
@@ -14,12 +15,17 @@ public class BookLoanConfig {
                 List.of(
                         new BookLoan(
                                 69,
-                                1
+                                1,
+                                new Date(),
+                                new Date()
                         ),
                         new BookLoan(
                                 55,
-                                2
+                                2,
+                                new Date(),
+                                new Date()
                         )
+
                 )
         );
     }

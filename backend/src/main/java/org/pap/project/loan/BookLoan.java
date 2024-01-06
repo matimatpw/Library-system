@@ -20,10 +20,14 @@ public class BookLoan {
     private int id;
     private Integer userId;
     private int copyBookId;
+    private  Date startDate;
+    private Date endDate;
 
-    public BookLoan(Integer userId, int copyBookId){
+    public BookLoan(Integer userId, int copyBookId, Date start, Date end){
         this.userId = userId;
         this.copyBookId = copyBookId;
+        this.startDate = start;
+        this.endDate = end;
     }
 }
 
