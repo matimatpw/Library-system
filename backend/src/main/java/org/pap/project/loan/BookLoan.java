@@ -19,15 +19,22 @@ public class BookLoan {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private Integer userId;
-    private int copyBookId;
+    private Integer copyBookId;
     private  Date startDate;
     private Date endDate;
 
-    public BookLoan(Integer userId, int copyBookId, Date start, Date end){
+    public BookLoan(Integer userId, Integer copyBookId, Date startDate, Date endDate){
         this.userId = userId;
         this.copyBookId = copyBookId;
-        this.startDate = start;
-        this.endDate = end;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
+
+        public BookLoan(Integer userId){
+            this.userId = userId;
+            this.copyBookId = 20;
+            this.startDate = null;
+            this.endDate = null;
+        }
 }
 
