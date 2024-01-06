@@ -3,7 +3,6 @@ import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 import DatePicker from 'react-datepicker';
 import { useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import './App.css';
 
 const GoogleCalendar = () => {
   const session = useSession();

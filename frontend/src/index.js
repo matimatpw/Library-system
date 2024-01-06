@@ -48,6 +48,7 @@ export default function AppIndex() {
           <Route path="/addbookform" element={<AddBookForm />}></Route>
           <Route path="/deletebookform" element={<DeleteBookForm />}></Route>
           <Route path="/calendar" element={<GoogleCalendar />}></Route>
+          <Route path="/profile" element={<DeleteBookForm />}></Route>
         </Routes>
       </Router>
     </React.Fragment>
