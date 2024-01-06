@@ -18,7 +18,7 @@ class BooksTable extends Component {
           </button>
       ),
     },
-    { path: "isBorrowed", label: "isBorrowed" },
+    // { path: "isBorrowed", label: "isBorrowed" },
   ];
 
   render() {

@@ -13,12 +13,12 @@ public class BookLoanConfig {
         return args -> bookLoanRepository.saveAll(
                 List.of(
                         new BookLoan(
-                                69,
+                                1,
                                 1
                         ),
                         new BookLoan(
-                                55,
-                                2
+                                1,
+                                6
                         )
                 )
         );

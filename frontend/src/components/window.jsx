@@ -10,7 +10,7 @@ class Window extends Component {
   }
 
   componentDidMount() {
-    Modal.setAppElement('#root'); // Ustawienie elementu aplikacji na div z id "root"
+    Modal.setAppElement('#root');
   }
 
   borrowBook = (bookcopy) => {
