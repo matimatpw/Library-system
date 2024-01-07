@@ -14,13 +14,13 @@ class Profile extends Component {
 
     componentDidMount() {
         // this.fetchbooks();
-        this.fetchbookLoans();
+        this.fetchbookLoans(userid);
     }
 
-    fetchbookLoans = async () => {
+    fetchbookLoans = async (userid) => {
         console.log("Fetching book loans...");
         try {
-            const response = await fetch(`http://localhost:8080/bookloans/userid/1`);
+            const response = await fetch(`http://localhost:8080/bookloans/userid/${userid}`);
             const data = await response.json();
             this.setState({ bookLoans: data });
             this.fetchbookCopies(this.state.bookLoans);
