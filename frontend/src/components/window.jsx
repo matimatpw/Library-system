@@ -20,61 +20,22 @@ const Window = (props) => {
   
   const eventDescription = useState("Please return borrowed book on time!");
 
-
   useEffect(() => {
     Modal.setAppElement('#root');
   }, []);
 
   const borrowBook = async (bookcopy) => {
-    if (bookcopy.isBorrowed) {
-      alert("Book is already borrowed");
-      return;
-    }
-    
-    
-    const updatedBookCopies = bookCopies.map((copy) =>
-    copy.id === bookcopy.id ? { ...copy, borrowed: true} : copy
-    );
-    
-    setBookCopies(updatedBookCopies);
-    BookCopiesUpdate(bookcopy.id);
-    console.log("Borrowing book: ", bookcopy);
-    
-    
-    try {
-      // Add BookLoan after borrowing a book
-      const response = await fetch('http://localhost:8080/bookloans/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: 12, //TODO USER ID
-          copyBookId: bookcopy.id,
-          startDate: borrowDate,
-          endDate: end, 
-        }),
-      });
-    
-      if (!response.ok) {
-        throw new Error('Failed to add BookLoan: ' + response.status);
-      }
-    } catch (error) {
-      console.error('Error adding BookLoan:', error.message);
-    }
-
-
     try {
       if (!session || !session.provider_token) {
         throw new Error('Session or provider_token is undefined');
       }
     } catch (error) {
-      console.log("XDDDD NIE DZIALA")
-      alert(error.message);
+      console.log(error.message)
+      alert("Session undefined. You need to be logged in Google to borrow a book");
+      window.location.href = "/calendar";
+      return;
     }
     
-
-    console.log("TITLE", bookcopy.isbn);
     const event = {
       'summary': "Deadline for Book with isbn: "+ bookcopy.isbn,
       'description': eventDescription,
@@ -119,6 +80,43 @@ const Window = (props) => {
       console.error('Error creating calendar event:', error);
 
       alert(error.message); //TODO handle error
+    }
+
+
+    if (bookcopy.isBorrowed) {
+      alert("Book is already borrowed");
+      return;
+    }
+    
+    
+    const updatedBookCopies = bookCopies.map((copy) =>
+    copy.id === bookcopy.id ? { ...copy, borrowed: true} : copy
+    );
+    
+    setBookCopies(updatedBookCopies);
+    BookCopiesUpdate(bookcopy.id);
+    console.log("Borrowing book: ", bookcopy);
+
+    try {
+      // Add BookLoan after borrowing a book
+      const response = await fetch('http://localhost:8080/bookloans/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: 12, //TODO USER ID
+          copyBookId: bookcopy.id,
+          startDate: borrowDate,
+          endDate: end, 
+        }),
+      });
+    
+      if (!response.ok) {
+        throw new Error('Failed to add BookLoan: ' + response.status);
+      }
+    } catch (error) {
+      console.error('Error adding BookLoan:', error.message);
     }
     
   };
