@@ -8,8 +8,8 @@ const GoogleCalendar = () => {
   const session = useSession();
   const supabase = useSupabaseClient();
 
-  const [start, setStart] = useState(new Date());
-  const [end, setEnd] = useState(new Date());
+  // const [start, setStart] = useState(new Date());
+  // const [end, setEnd] = useState(new Date());
 
   const [eventName, setEventname] = useState("");
   const [eventDescription, setEventDescription] = useState("");
@@ -34,15 +34,30 @@ const GoogleCalendar = () => {
   async function createCalendarEvent() {
     console.log("createCalendarEvent");
 
+    try {
+      if (!session || !session.provider_token) {
+        throw new Error('Session or provider_token is undefined');
+      }
+    } catch (error) {
+      console.log("XDDDD NIE DZIALA")
+      alert(error.message);
+    }
+
+    const now = new Date();
+    const start = now.toISOString();
+
+    // Set the end time, e.g., 1 hour later
+    const end = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000).toISOString();
+
     const event = {
       'summary': eventName,
       'description': eventDescription,
       'start': {
-        'dateTime': start.toISOString(),
+        'dateTime': start,
         'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
       },
       'end': {
-        'dateTime': end.toISOString(),
+        'dateTime': end,
         'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
       },
     };
@@ -91,9 +106,9 @@ const GoogleCalendar = () => {
           <h2>Hey there, {session.user.email.split('@')[0]}!</h2>
           <div>
             <p>START of your event</p>
-            <DatePicker selected={start} onChange={(date) => setStart(date)} />
+            {/* <DatePicker selected={start} onChange={(date) => setStart(date)} /> */}
             <p>END of your event</p>
-            <DatePicker selected={end} onChange={(date) => setEnd(date)} />
+            {/* <DatePicker selected={end} onChange={(date) => setEnd(date)} /> */}
           </div>
           <hr />
           <div>
