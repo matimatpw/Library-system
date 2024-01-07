@@ -1,55 +1,117 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import BookCopyTable from './booksCopyTable';
 
-class Window extends Component {
-
-  state = {
-    bookCopies: [],
-    sortColumn: { path: "title", order: "asc" },
-  }
-
-  componentDidMount() {
-    Modal.setAppElement('#root'); // Ustawienie elementu aplikacji na div z id "root"
-  }
-
-  borrowBook = (bookcopy) => {
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 
 
-    if (!this.props.session) {
-      window.location.href = '/calendar';
-      return;
-    }
+const Window = (props) => {
+  const [bookCopies, setBookCopies] = useState([]);
+  const [sortColumn, setSortColumn] = useState({ path: "title", order: "asc" });
 
 
+  const session = useSession();
+  const supabase = useSupabaseClient();
+  
+  const [eventName, setEventname] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
+
+
+  useEffect(() => {
+    Modal.setAppElement('#root');
+  }, []);
+
+  const borrowBook = async (bookcopy) => {
     if (bookcopy.isBorrowed) {
       alert("Book is already borrowed");
       return;
     }
-    const updatedBookCopies = this.state.bookCopies.map((copy) =>
+
+    const updatedBookCopies = bookCopies.map((copy) =>
       copy.id === bookcopy.id ? { ...copy, borrowed: true } : copy
     );
 
-    this.setState({ bookCopies: updatedBookCopies });
-
-    this.BookCopiesUpdate(bookcopy.id);
+    setBookCopies(updatedBookCopies);
+    BookCopiesUpdate(bookcopy.id);
     console.log("Borrowing book: ", bookcopy);
+
+
+
+
+    try {
+      if (!session || !session.provider_token) {
+        throw new Error('Session or provider_token is undefined');
+      }
+    } catch (error) {
+      console.log("XDDDD NIE DZIALA")
+      alert(error.message);
+    }
+
+    const now = new Date();
+    const start = now.toISOString();
+
+    const end = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000).toISOString();
+    console.log("TITLE", bookcopy.isbn);
+    const event = {
+      'summary': bookcopy.isbn,
+      'description': eventDescription,
+      'start': {
+        'dateTime': start,
+        'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+      'end': {
+        'dateTime': end,
+        'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+    };
+
+
+
+    try {
+      if(event.start.dateTime > event.end.dateTime) {
+        throw new Error("Start date is after end date");
+      }
+      if(event.summary === "") {
+        throw new Error("Event name is empty");
+      }
+      const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + session.provider_token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(event),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(`Failed to create event: ${JSON.stringify(data)}`);
+      }
+
+      console.log(data);
+      alert("Event created!");
+    } catch (error) {
+      console.error('Error creating calendar event:', error);
+
+      alert(error.message); //TODO handle error
+    }
+    
   };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isbn !== prevProps.isbn) {
-      this.fetchbookCopies(this.props.isbn);
-    }
-  }
+  useEffect(() => {
+    fetchbookCopies(props.isbn);
+  }, [props.isbn]);
 
-  fetchbookCopies = (isbn) => {
+  const fetchbookCopies = (isbn) => {
     fetch(`http://localhost:8080/bookcopies/isbn/${isbn}`)
       .then((response) => response.json())
-      .then((data) => this.setState({ bookCopies: data }))
+      .then((data) => setBookCopies(data))
       .catch((error) => console.error("Error fetching book data:", error));
   };
 
-  BookCopiesUpdate = async (id) => {
+  const BookCopiesUpdate = async (id) => {
+  
     try {
       const response = await fetch(`http://localhost:8080/bookcopies/update/${id}`, {
         method: 'PUT',
@@ -67,37 +129,31 @@ class Window extends Component {
     } catch (error) {
       console.error('Error updating book copy:', error.message);
     }
-  }
 
-  handleSort = (sortColumn) => {
-    this.setState({ sortColumn });
+   
+
+
   };
 
-  render() {
+  const handleSort = (column) => {
+    setSortColumn(column);
+  };
 
-    // const { length: count } = this.state.bookCopies;
-    const { sortColumn } = this.state;
-
-    // if (count === 0) return <p>There are no books in the database.</p>;
-
-    // const { totalCount, bookCopies } = this.getPagedData();
-
-    return (
-      <Modal
-        isOpen={this.props.showModal}
-        onRequestClose={this.props.onRequestClose}
-        contentLabel={"Example Modal"}
-      >
-        <BookCopyTable
-          bookCopies={this.state.bookCopies}
-          onSort={this.handleSort}
-          sortColumn={sortColumn}
-          borrowBook={this.borrowBook}
-        />
-        <button className='btn btn-primary' onClick={this.props.onRequestClose}>Close Modal</button>
-      </Modal>
-      );
-  }
-}
+  return (
+    <Modal
+      isOpen={props.showModal}
+      onRequestClose={props.onRequestClose}
+      contentLabel={"Example Modal"}
+    >
+      <BookCopyTable
+        bookCopies={bookCopies}
+        onSort={handleSort}
+        sortColumn={sortColumn}
+        borrowBook={borrowBook}
+      />
+      <button className='btn btn-primary' onClick={props.onRequestClose}>Close Modal</button>
+    </Modal>
+  );
+};
 
 export default Window;
