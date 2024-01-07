@@ -13,8 +13,8 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        this.fetchbooks();
-        this.fetchbooks();
+        // this.fetchbooks();
+        this.fetchbookLoans();
     }
 
     fetchbookLoans = async () => {
@@ -23,15 +23,16 @@ class Profile extends Component {
             const response = await fetch(`http://localhost:8080/bookloans/userid/1`);
             const data = await response.json();
             this.setState({ bookLoans: data });
+            this.fetchbookCopies(this.state.bookLoans);
         } catch (error) {
             console.error("Error fetching book loans:", error);
         }
     }
 
-    fetchbookCopies = async () => {
+    fetchbookCopies = async (bookLoans) => {
         try {
-            await this.fetchbookLoans();
-            const { bookLoans } = this.state;
+            // await this.fetchbookLoans();
+            // const { bookLoans } = this.state;
             console.log("Loans abc: ", bookLoans);
 
             if (bookLoans.length === 0) {
@@ -65,16 +66,17 @@ class Profile extends Component {
             });
             
             this.setState({ mergedBookLoans });
-            console.log("Merged book loans:", mergedBookLoans);
+            console.log("Merged book loans:", this.state.mergedBookLoans);
+            this.fetchbooks(mergedBookLoans);
         } catch (error) {
             console.error("Error fetching book copies:", error);
         }
     };
 
-    fetchbooks = async () => {
+    fetchbooks = async (mergedBookLoans) => {
         try {
-            await this.fetchbookCopies();
-            const { mergedBookLoans } = this.state;
+            // await this.fetchbookCopies();
+            // const { mergedBookLoans } = this.state;
             console.log("Book Loans:", mergedBookLoans);
     
             if (mergedBookLoans.length === 0) {
