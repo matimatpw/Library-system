@@ -30,9 +30,9 @@ public class BookLoan {
         this.endDate = endDate;
     }
 
-        public BookLoan(Integer userId){
+        public BookLoan(Integer userId, Integer copyBookId){
             this.userId = userId;
-            this.copyBookId = 20;
+            this.copyBookId = copyBookId;
             this.startDate = null;
             this.endDate = null;
         }
