@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
-import { useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
+import '../css/GoogleCalendar.css';
 
 const GoogleCalendar = () => {
   const session = useSession();
@@ -25,17 +25,17 @@ const GoogleCalendar = () => {
   };
 
   return (
-    <div>
+    <div className='container-2'>
       <h2>Google Calendar</h2>
       {session ? (
         <>
-          <h2>Hey there, {session.user.email.split('@')[0]}!</h2>
+          <h2>You are logged in as ~{session.user.email.split('@')[0]}!</h2>
 
-          <hr />
-          <button className='signin' onClick={signOut}> Sign out</button>
+
+          <button className="btn btn-primary" type="submit" onClick={signOut}> Sign out</button>
         </>
       ) : (
-        <button className='signin' onClick={googleSignIn}>Sign In with Google to see calendar</button>
+        <button className="btn btn-primary" type="submit" onClick={googleSignIn}>Sign In with Google to see calendar</button>
       )}
 
     </div>
