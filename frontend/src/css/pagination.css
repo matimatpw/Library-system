@@ -1,0 +1,14 @@
+@import 'colors.css';
+
+.active>.page-link {
+    position: relative;
+    z-index: 0;
+    border-color: var(--dark-color);
+    background-color: var(--dark-color);
+  } 
+
+.page-link {
+    color: var(--dark-color);
+    cursor: pointer;
+    --bs-pagination-hover-color: #4c4d4c;
+}

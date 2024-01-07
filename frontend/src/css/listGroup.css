@@ -1,0 +1,11 @@
+@import 'colors.css';
+
+.list-group-item.active {
+    z-index: 0;
+    border-color: var(--border-color);
+    background-color: var(--dark-color);
+}
+
+.list-group-item {
+    cursor: pointer;
+}

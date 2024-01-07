@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital@1&display=swap');
+@import 'colors.css';
 
 body {
-    background-color: grey !important;
+    background-color: var(--page-body-color) !important;
     font-family: "Regular 400 Italic" !important;
-    /* padding: 60px 0; */
   }
 
 .App {
@@ -29,34 +29,30 @@ body {
   justify-content: space-evenly;
 }
 
-button {
-  cursor: pointer; /* kształt kursora na wskazujący */
+/* button {
+  cursor: pointer; |* kształt kursora na wskazujący *|
   font-weight: 600;
-  white-space: nowrap; /*tekst nie łamie się na nowe linie */
+  white-space: nowrap; |*tekst nie łamie się na nowe linie *|
   border: 5px solid transparent;
   border-color: tan;
   padding: 10px 10px;
   font-size: 30px;
   border-radius: 5%;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-}
+} */
 
-button.add {
-  /* background-color: #e83eBc; */
+/* button.add {
+  background-color: #e83eBc;
   background-color: burlywood;
   color:  #000;
-}
+} */
 
 .btn-primary {
-  background-color: lightgrey !important;
-  border-color: grey !important;
-  color: black !important;
+  background-color: var(--button-background-color) !important;
+  border-color: var(--button-border-color) !important;
+  color: var(--button-text-color) !important;
 }
 
-/* .author
-{
-  font-weight: 'bold';
-} */
 
 .bottom-container {
   width: 760px;
