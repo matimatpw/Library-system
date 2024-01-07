@@ -46,7 +46,6 @@ const GoogleCalendar = () => {
     const now = new Date();
     const start = now.toISOString();
 
-    // Set the end time, e.g., 1 hour later
     const end = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000).toISOString();
 
     const event = {
@@ -111,7 +110,7 @@ const GoogleCalendar = () => {
             {/* <DatePicker selected={end} onChange={(date) => setEnd(date)} /> */}
           </div>
           <hr />
-          <div>
+          {/* <div>
             <p>Event Name</p>
             <input type="text" value={eventName} onChange={(e) => setEventname(e.target.value)} />
             <p>Event Description</p>
@@ -119,7 +118,7 @@ const GoogleCalendar = () => {
             <hr />
             <button onClick={createCalendarEvent}>Create Calendar Event!</button>
             <p></p>
-          </div>
+          </div> */}
 
           <button className='signin' onClick={signOut}> Sign out</button>
         </>

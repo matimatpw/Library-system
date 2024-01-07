@@ -2,19 +2,23 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import BookCopyTable from './booksCopyTable';
 
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useSession } from '@supabase/auth-helpers-react';
 
 
 const Window = (props) => {
   const [bookCopies, setBookCopies] = useState([]);
   const [sortColumn, setSortColumn] = useState({ path: "title", order: "asc" });
+  
 
+  const now = new Date();
+  const borrowDate = now.toISOString();
+  const start = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000).toISOString(); // 10 dni pozniej
+  const end = new Date(now.getTime() + 11 * 24 * 60 * 60 * 1000).toISOString();
+  
 
   const session = useSession();
-  const supabase = useSupabaseClient();
   
-  const [eventName, setEventname] = useState("");
-  const [eventDescription, setEventDescription] = useState("");
+  const eventDescription = useState("Please return borrowed book on time!");
 
 
   useEffect(() => {
@@ -26,16 +30,38 @@ const Window = (props) => {
       alert("Book is already borrowed");
       return;
     }
-
+    
+    
     const updatedBookCopies = bookCopies.map((copy) =>
-      copy.id === bookcopy.id ? { ...copy, borrowed: true } : copy
+    copy.id === bookcopy.id ? { ...copy, borrowed: true} : copy
     );
-
+    
     setBookCopies(updatedBookCopies);
     BookCopiesUpdate(bookcopy.id);
     console.log("Borrowing book: ", bookcopy);
-
-
+    
+    
+    try {
+      // Add BookLoan after borrowing a book
+      const response = await fetch('http://localhost:8080/bookloans/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: 12, //TODO USER ID
+          copyBookId: bookcopy.id,
+          startDate: borrowDate,
+          endDate: end, 
+        }),
+      });
+    
+      if (!response.ok) {
+        throw new Error('Failed to add BookLoan: ' + response.status);
+      }
+    } catch (error) {
+      console.error('Error adding BookLoan:', error.message);
+    }
 
 
     try {
@@ -46,14 +72,11 @@ const Window = (props) => {
       console.log("XDDDD NIE DZIALA")
       alert(error.message);
     }
+    
 
-    const now = new Date();
-    const start = now.toISOString();
-
-    const end = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000).toISOString();
     console.log("TITLE", bookcopy.isbn);
     const event = {
-      'summary': bookcopy.isbn,
+      'summary': "Deadline for Book with isbn: "+ bookcopy.isbn,
       'description': eventDescription,
       'start': {
         'dateTime': start,
@@ -65,15 +88,16 @@ const Window = (props) => {
       },
     };
 
-
-
     try {
+
       if(event.start.dateTime > event.end.dateTime) {
         throw new Error("Start date is after end date");
       }
+      
       if(event.summary === "") {
         throw new Error("Event name is empty");
       }
+
       const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
         method: 'POST',
         headers: {
@@ -118,7 +142,9 @@ const Window = (props) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ "isBorrowed": true })
+        body: JSON.stringify({ 
+          "isBorrowed": true
+        })
       });
 
       if (!response.ok) {
