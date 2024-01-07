@@ -52,9 +52,10 @@ const AddBookForm = ({ addBook }) => {
   return (
       <div className="container-2">
         <h2>Add book</h2>
+        <div className="col-5">
         <form onSubmit={handleSubmit}>
           <div className="row g-3 row-g-3">
-            <div className="col-3">
+            <div className="col-2">
               <label for="title" className="form-label">Title</label>
             </div>
             <div className="col-9">
@@ -69,7 +70,7 @@ const AddBookForm = ({ addBook }) => {
             </div>
           </div>
           <div className="row g-3 row-g-3">
-            <div className="col-3">
+            <div className="col-2">
               <label for="author" className="form-label">Author</label>
             </div>
             <div className="col-9">
@@ -84,7 +85,7 @@ const AddBookForm = ({ addBook }) => {
             </div>
           </div>
           <div className="row g-3 row-g-3">
-            <div className="col-3">
+            <div className="col-2">
               <label for="isbn" className="form-label">ISBN</label>
             </div>
             <div className="col-9">
@@ -104,6 +105,7 @@ const AddBookForm = ({ addBook }) => {
                 Add book
               </button>
         </form>
+        </div>
     </div>
   );
 };

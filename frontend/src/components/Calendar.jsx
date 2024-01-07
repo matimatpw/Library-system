@@ -84,7 +84,7 @@ const GoogleCalendar = () => {
   console.log(eventDescription)
 
   return (
-    <div>
+    <div className="container-2">
       <h2>Google Calendar</h2>
       {session ? (
         <>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BookLoanTable from './bookLoanTable';
+import '../css/BookForm.css'
 
 class Profile extends Component {
 
@@ -12,6 +13,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
+        this.fetchbooks();
         this.fetchbooks();
     }
 
@@ -30,7 +32,7 @@ class Profile extends Component {
         try {
             await this.fetchbookLoans();
             const { bookLoans } = this.state;
-            console.log(bookLoans);
+            console.log("Loans abc: ", bookLoans);
 
             if (bookLoans.length === 0) {
                 console.log("No book loans to fetch copies for.");
@@ -46,6 +48,7 @@ class Profile extends Component {
                     try {
                         const response = await fetch(`http://localhost:8080/bookcopies/id/${copyBookId}`);
                         const data = await response.json();
+                        this.setState({ bookCopies: data });
                         return data;
                     } catch (error) {
                         console.error("Error fetching book copies:", error);
@@ -97,6 +100,7 @@ class Profile extends Component {
                     return {
                         ...copy,
                         title: matchingBook ? matchingBook.title : null,
+                        author: matchingBook ? matchingBook.author : null,
                     };
                 });
     
@@ -117,20 +121,22 @@ class Profile extends Component {
 
 
     render() {
-        const { bookCopies, bookLoans, mergedBookLoans, mergedBookCopies, sortColumn } = this.state;
+        const {mergedBookCopies, sortColumn } = this.state;
 
         return (
-            <div>
+            <div className="container-2">
                 <h1>Profile</h1>
                 <h2>Book Loans</h2>
-                <BookLoanTable
-                    bookCopies={bookCopies}
-                    bookLoans={bookLoans}
-                    mergedBookLoans={mergedBookLoans}
-                    mergedBookCopies={mergedBookCopies}
-                    onSort={this.handleSort}
-                    sortColumn={sortColumn}
-                />
+                <div className="col-8">
+                    <BookLoanTable
+                        // bookCopies={bookCopies}
+                        // bookLoans={bookLoans}
+                        // mergedBookLoans={mergedBookLoans}
+                        mergedBookCopies={mergedBookCopies}
+                        onSort={this.handleSort}
+                        sortColumn={sortColumn}
+                    />
+                </div>
             </div>
         );
     }

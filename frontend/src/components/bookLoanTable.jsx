@@ -4,16 +4,17 @@ import Table from "./common/table";
 class BookLoanTable extends Component {
 
   columns = [
-    { path: "id", label: "Id" },
-    { path: "userId", label: "User Id" },
-    { path: "copyBookId", label: "Book Copy Id" },
-    { path: "isbn", label: "ISBN" },
+    // { path: "id", label: "Id" },
+    // { path: "userId", label: "User Id" },
     { path: "title", label: "Title" },
-    // { path: "author", label: "Author" },
+    { path: "author", label: "Author" },
+    { path: "isbn", label: "ISBN" },
+    { path: "copyBookId", label: "Book Copy Id" },
+    { path: "dueDate", label: "Due Date" },
   ];
 
   render() {
-    const {bookCopies, bookLoans, mergedBookLoans, mergedBookCopies, onSort, sortColumn } = this.props;
+    const {mergedBookCopies, onSort, sortColumn } = this.props;
 
     return (
         <Table
