@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(path = "/bookloans")
@@ -27,6 +28,20 @@ public class BookLoanController {
     @PostMapping("/add")
     public ResponseEntity<BookLoan> addNewBookLoan(@RequestBody BookLoan bookLoan){
         return new ResponseEntity<BookLoan>(bookLoanService.addNewBookLoan(bookLoan), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteBookLoan(@PathVariable Integer id){
+        try {
+            bookLoanService.deleteBookLoan(id);
+            return new ResponseEntity<>("BookLoan with id " + id + " deleted", HttpStatus.OK);
+        } catch (
+        NoSuchElementException e) {
+            return new ResponseEntity<>("BookLoan with id " + id + " not found", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error deleting bookLoan: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }
