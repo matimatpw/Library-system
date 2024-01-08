@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/library
+    url: jdbc:postgresql://localhost:5432/library
     username:
     password:
   jpa:
@@ -20,6 +20,8 @@ spring:
       mail:
         smtp:
           auth: true
+          starttls:
+            enable: true
           ssl:
             trust: "*"
           starttls:
