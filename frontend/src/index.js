@@ -20,6 +20,7 @@ import Logout from "./components/logout";
 import auth from "./services/authService";
 import "./css/index.css";
 import Profile from "./components/profile";
+import AddBooks from "./components/AddBook";
 import DeleteBooks from "./components/DeleteBooks";
 
 const supabase = createClient(
@@ -28,46 +29,47 @@ const supabase = createClient(
 );
 
 export default function AppIndex() {
-  return (
-    <React.Fragment>
-      <Router>
-        <NavBar user={auth.getCurrentUser()} />
-        <Routes>
-          <Route
-            exact path="/"
-            element={
-              !auth.getCurrentUser() ? <Navigate to="/login" /> : <App />}
-          ></Route>
-          <Route
-            path="/login"
-            element={
-              auth.getCurrentUser() ? <Navigate to="/" /> : <LoginForm />
-            }
-          ></Route>
-          <Route
-            path="/register"
-            element={
-              auth.getCurrentUser() ? <Navigate to="/" /> : <RegisterForm />
-            }
-          ></Route>
-          <Route path="/logout" element={<Logout />} />
-          {auth.getCurrentUser() && auth.getIsAdmin() && (
-            <React.Fragment>
-              <Route path="/addbookform" element={<AddBookForm />}></Route>
-              <Route path="/deletebookform" element={<DeleteBookForm />}></Route>
-              <Route path="/deletetest" element={<DeleteBooks />}></Route>
-            </React.Fragment>
-          )}
-          {auth.getCurrentUser() && !auth.getIsAdmin() && (
-            <React.Fragment>
-              <Route path="/calendar" element={<GoogleCalendar />}></Route>
-              <Route path="/profile" element={<Profile />}></Route>
-            </React.Fragment>
-          )}
-        </Routes>
-      </Router>
-    </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            <Router>
+                <NavBar user={auth.getCurrentUser()}/>
+                <Routes>
+                    <Route
+                        exact path="/"
+                        element={
+                            !auth.getCurrentUser() ? <Navigate to="/login"/> : <App/>}
+                    ></Route>
+                    <Route
+                        path="/login"
+                        element={
+                            auth.getCurrentUser() ? <Navigate to="/"/> : <LoginForm/>
+                        }
+                    ></Route>
+                    <Route
+                        path="/register"
+                        element={
+                            auth.getCurrentUser() ? <Navigate to="/"/> : <RegisterForm/>
+                        }
+                    ></Route>
+                    <Route path="/logout" element={<Logout/>}/>
+                    {auth.getCurrentUser() && auth.getIsAdmin() && (
+                        <React.Fragment>
+                            <Route path="/addbookform" element={<AddBookForm/>}></Route>
+                            <Route path="/deletebookform" element={<DeleteBookForm/>}></Route>
+                            <Route path="/deletetest" element={<DeleteBooks/>}></Route>
+                            <Route path="/addtest" element={<AddBooks />}></Route>
+                        </React.Fragment>
+                    )}
+                    {auth.getCurrentUser() && !auth.getIsAdmin() && (
+                        <React.Fragment>
+                            <Route path="/calendar" element={<GoogleCalendar/>}></Route>
+                            <Route path="/profile" element={<Profile/>}></Route>
+                        </React.Fragment>
+                    )}
+                </Routes>
+            </Router>
+        </React.Fragment>
+    );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
