@@ -14,16 +14,12 @@ public class BookLoanConfig {
         return args -> bookLoanRepository.saveAll(
                 List.of(
                         new BookLoan(
-                                69,
                                 1,
-                                new Date(),
-                                new Date()
+                                1
                         ),
                         new BookLoan(
-                                55,
-                                2,
-                                new Date(),
-                                new Date()
+                                1,
+                                6
                         )
 
                 )

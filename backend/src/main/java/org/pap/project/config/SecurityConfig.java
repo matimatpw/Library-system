@@ -28,7 +28,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/**",
                                 "/books/**",
                                 "/bookcopies/**",
-                                "bookloans/**"
+                                "/bookloans/**"
                                 ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session

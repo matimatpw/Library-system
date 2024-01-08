@@ -3,6 +3,7 @@
   align-items: center;
   flex-direction: column;
   flex-wrap: nowrap;
+  text-align: center;
 }
 
 .row-g-3 {
