@@ -7,6 +7,8 @@ import { useSession } from "@supabase/auth-helpers-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import auth from "../services/authService"; // import
+
 const Window = (props) => {
   const [bookCopies, setBookCopies] = useState([]);
   const [sortColumn, setSortColumn] = useState({ path: "title", order: "asc" });
@@ -102,6 +104,8 @@ const Window = (props) => {
     BookCopiesUpdate(bookcopy.id);
     console.log("Borrowing book: ", bookcopy);
 
+    const userdata = auth.getCurrentUser();
+
     try {
       // Add BookLoan after borrowing a book
       const response = await fetch("http://localhost:8080/bookloans/add", {
@@ -110,7 +114,7 @@ const Window = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: 1, //TODO USER ID
+          userId: userdata.id, //TODO USER ID
           copyBookId: bookcopy.id,
           startDate: borrowDate,
           endDate: end,
