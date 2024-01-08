@@ -166,21 +166,24 @@ const Window = (props) => {
   };
 
   return (
-    <Modal
-      isOpen={props.showModal}
-      onRequestClose={props.onRequestClose}
-      contentLabel={"Example Modal"}
-    >
-      <BookCopyTable
-        bookCopies={bookCopies}
-        onSort={handleSort}
-        sortColumn={sortColumn}
-        borrowBook={borrowBook}
-      />
-      <button className="btn btn-primary" onClick={props.onRequestClose}>
-        Close Modal
-      </button>
-    </Modal>
+    <React.Fragment>
+      <Modal
+        isOpen={props.showModal}
+        onRequestClose={props.onRequestClose}
+        contentLabel={"Example Modal"}
+      >
+        <BookCopyTable
+          bookCopies={bookCopies}
+          onSort={handleSort}
+          sortColumn={sortColumn}
+          borrowBook={borrowBook}
+        />
+        <button className="btn btn-primary" onClick={props.onRequestClose}>
+          Close Modal
+        </button>
+      </Modal>
+      <ToastContainer />
+    </React.Fragment>
   );
 };
 
