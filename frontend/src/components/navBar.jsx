@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../css/navBar.css";
+import { getIsAdmin } from "../services/authService";
 
 const NavBar = ({ user }) => {
   return (
@@ -12,15 +13,6 @@ const NavBar = ({ user }) => {
         <div className="navbar-nav">
           <NavLink className="nav-item nav-link" to="/">
             Home
-          </NavLink>
-          <NavLink className="nav-item nav-link" to="/addbookform">
-            Add
-          </NavLink>
-          <NavLink className="nav-item nav-link" to="/deletebookform">
-            Delete
-          </NavLink>
-          <NavLink className="nav-item nav-link" to="/calendar">
-            Calendar
           </NavLink>
 
           {!user && (
@@ -36,9 +28,26 @@ const NavBar = ({ user }) => {
 
           {user && (
             <React.Fragment>
-              <NavLink className="nav-item nav-link" to="/profile">
-                Profile
-              </NavLink>
+              {getIsAdmin() && (
+                <React.Fragment>
+                  <NavLink className="nav-item nav-link" to="/addbookform">
+                    Add
+                  </NavLink>
+                  <NavLink className="nav-item nav-link" to="/deletebookform">
+                    Delete
+                  </NavLink>
+                </React.Fragment>
+              )}
+              {!getIsAdmin() && (
+                <React.Fragment>
+                  <NavLink className="nav-item nav-link" to="/calendar">
+                    Calendar
+                  </NavLink>
+                  <NavLink className="nav-item nav-link" to="/profile">
+                    Profile
+                  </NavLink>
+                </React.Fragment>
+              )}
               <NavLink className="nav-item nav-link" to="/logout">
                 Logout
               </NavLink>

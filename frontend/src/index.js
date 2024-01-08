@@ -32,7 +32,11 @@ export default function AppIndex() {
       <Router>
         <NavBar user={auth.getCurrentUser()} />
         <Routes>
-          <Route path="/" element={<App />}></Route>
+          <Route
+            exact path="/"
+            element={
+              !auth.getCurrentUser() ? <Navigate to="/login" /> : <App />}
+          ></Route>
           <Route
             path="/login"
             element={
@@ -46,10 +50,18 @@ export default function AppIndex() {
             }
           ></Route>
           <Route path="/logout" element={<Logout />} />
-          <Route path="/addbookform" element={<AddBookForm />}></Route>
-          <Route path="/deletebookform" element={<DeleteBookForm />}></Route>
-          <Route path="/calendar" element={<GoogleCalendar />}></Route>
-          <Route path="/profile" element={<Profile />}></Route>
+          {auth.getCurrentUser() && auth.getIsAdmin() && (
+            <React.Fragment>
+              <Route path="/addbookform" element={<AddBookForm />}></Route>
+              <Route path="/deletebookform" element={<DeleteBookForm />}></Route>
+            </React.Fragment>
+          )}
+          {auth.getCurrentUser() && !auth.getIsAdmin() && (
+            <React.Fragment>
+              <Route path="/calendar" element={<GoogleCalendar />}></Route>
+              <Route path="/profile" element={<Profile />}></Route>
+            </React.Fragment>
+          )}
         </Routes>
       </Router>
     </React.Fragment>
