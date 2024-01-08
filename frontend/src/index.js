@@ -20,6 +20,7 @@ import Logout from "./components/logout";
 import auth from "./services/authService";
 import "./css/index.css";
 import Profile from "./components/profile";
+import DeleteBooks from "./components/DeleteBooks";
 
 const supabase = createClient(
   "https://ibdbiitmohlorehxiljr.supabase.co",
@@ -54,6 +55,7 @@ export default function AppIndex() {
             <React.Fragment>
               <Route path="/addbookform" element={<AddBookForm />}></Route>
               <Route path="/deletebookform" element={<DeleteBookForm />}></Route>
+              <Route path="/deletetest" element={<DeleteBooks />}></Route>
             </React.Fragment>
           )}
           {auth.getCurrentUser() && !auth.getIsAdmin() && (
