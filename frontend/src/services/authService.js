@@ -30,6 +30,11 @@ export function getCurrentUser() {
   }
 }
 
+export function getIsAdmin() {
+  const decoded = getCurrentUser();
+  return decoded.role === "ADMIN";
+}
+
 export function getJwt() {
   return localStorage.getItem(tokenKey);
 }
@@ -40,4 +45,5 @@ export default {
   logout,
   getCurrentUser,
   getJwt,
+  getIsAdmin,
 };
