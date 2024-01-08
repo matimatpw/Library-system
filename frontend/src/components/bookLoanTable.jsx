@@ -10,7 +10,7 @@ class BookLoanTable extends Component {
     { path: "author", label: "Author" },
     { path: "isbn", label: "ISBN" },
     { path: "copyBookId", label: "Book Copy Id" },
-    { path: "dueDate", label: "Due Date" },
+    { path: "endDate", label: "Due Date" },
   ];
 
   render() {

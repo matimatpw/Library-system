@@ -25,6 +25,13 @@ class Profile extends Component {
         `http://localhost:8080/bookloans/userid/${userid}`
       );
       const data = await response.json();
+      data.forEach((loan) => {
+        console.log("Before modification:", loan);
+        if (loan.endDate !== null) {
+            loan.endDate = loan.endDate.substring(0, 10);
+        }
+        console.log("After modification:", loan.endDate);
+      });
       this.setState({ bookLoans: data });
       this.fetchbookCopies(this.state.bookLoans);
     } catch (error) {
