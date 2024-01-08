@@ -22,8 +22,16 @@ class Profile extends Component {
         try {
             const response = await fetch(`http://localhost:8080/bookloans/userid/${userid}`);
             const data = await response.json();
+            data.forEach((loan) => {
+                console.log("Before modification:", loan);
+                if (loan.endDate !== null) {
+                    loan.endDate = loan.endDate.substring(0, 10);
+                }
+                console.log("After modification:", loan.endDate);
+            });
             this.setState({ bookLoans: data });
             this.fetchbookCopies(this.state.bookLoans);
+
         } catch (error) {
             console.error("Error fetching book loans:", error);
         }

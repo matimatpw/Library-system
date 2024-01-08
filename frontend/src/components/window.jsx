@@ -110,7 +110,7 @@ const Window = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: 12, //TODO USER ID
+          userId: 1, //TODO USER ID
           copyBookId: bookcopy.id,
           startDate: borrowDate,
           endDate: end,
