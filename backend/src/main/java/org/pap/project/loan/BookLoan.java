@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.pap.project.copy.BookCopy;
+import org.pap.project.user.User;
 
 import java.util.Date;
 
@@ -18,23 +20,25 @@ public class BookLoan {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
-    private Integer userId;
-    private Integer copyBookId;
+    @ManyToOne
+    private User user;
+    @OneToOne
+    private BookCopy bookCopy;
     private  Date startDate;
     private Date endDate;
 
-    public BookLoan(Integer userId, Integer copyBookId, Date startDate, Date endDate){
-        this.userId = userId;
-        this.copyBookId = copyBookId;
+    public BookLoan(User user, BookCopy bookCopy, Date startDate, Date endDate){
+        this.user = user;
+        this.bookCopy = bookCopy;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-        public BookLoan(Integer userId, Integer copyBookId){
-            this.userId = userId;
-            this.copyBookId = copyBookId;
-            this.startDate = null;
-            this.endDate = null;
-        }
+    public BookLoan(User user, BookCopy bookCopy){
+        this.user = user;
+        this.bookCopy = bookCopy;
+        this.startDate = null;
+        this.endDate = null;
+    }
 }
 

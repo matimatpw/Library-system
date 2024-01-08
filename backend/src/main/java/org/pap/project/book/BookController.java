@@ -54,16 +54,16 @@ public class BookController {
         }
     }
 
-    @PutMapping("/update/{isbn}")
-    public ResponseEntity<Book> updateBookStatus(@PathVariable String isbn, @RequestBody Map<String, String> payload){
-        try {
-            return new ResponseEntity<Book>(bookService.updateBookStatus(isbn, payload.get("isBorrowed")), HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<Book>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @PutMapping("/update/{isbn}")
+//    public ResponseEntity<Book> updateBookStatus(@PathVariable String isbn, @RequestBody Map<String, String> payload){
+//        try {
+//            return new ResponseEntity<Book>(bookService.updateBookStatus(isbn, payload.get("isBorrowed")), HttpStatus.OK);
+//        } catch (NoSuchElementException e) {
+//            return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
+//        } catch (Exception e) {
+//            return new ResponseEntity<Book>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 
 }

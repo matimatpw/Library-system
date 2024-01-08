@@ -1,5 +1,7 @@
 package org.pap.project.copy;
 
+import org.pap.project.book.Book;
+import org.pap.project.book.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,10 +14,13 @@ import java.util.Optional;
 public class BookCopyService {
     @Autowired
     private final BookCopyRepository bookCopyRepository;
+    @Autowired
+    private final BookRepository bookRepository;
 
     @Autowired
-    public BookCopyService(BookCopyRepository bookCopyRepository) {
+    public BookCopyService(BookCopyRepository bookCopyRepository, BookRepository bookRepository) {
         this.bookCopyRepository = bookCopyRepository;
+        this.bookRepository = bookRepository;
     }
 
     public List<BookCopy> allBookCopies() {
@@ -31,7 +36,8 @@ public class BookCopyService {
     }
 
     public BookCopy createNewBookCopy(String isbn) {
-        BookCopy bookCopy = new BookCopy(isbn);
+        Book book = bookRepository.findById(isbn).orElseThrow(() -> new IllegalStateException("Book with isbn " + isbn + " does not exist"));
+        BookCopy bookCopy = new BookCopy(book);
         bookCopyRepository.save(bookCopy);
         return bookCopy;
     }

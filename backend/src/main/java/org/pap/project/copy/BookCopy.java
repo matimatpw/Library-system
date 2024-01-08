@@ -1,12 +1,11 @@
 package org.pap.project.copy;
 
-import java.util.Date;
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.pap.project.book.Book;
 
 @Entity
 @Table(name = "book_copy")
@@ -18,16 +17,11 @@ public class BookCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
-    private String isbn;
     private boolean isBorrowed;
-    private Date borrowDate;
-    private Integer actuserid;
+    @ManyToOne
+    private Book book;
 
-    public BookCopy(String isbn) {
-        this.isbn = isbn;
-        this.isBorrowed = false;
-        this.borrowDate = null;
-        this.actuserid = null;
+    public BookCopy(Book book) {
+        this.book = book;
     }
-
 }
