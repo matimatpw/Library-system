@@ -24,8 +24,6 @@ spring:
             enable: true
           ssl:
             trust: "*"
-          starttls:
-            enable: true
 
 
 server:
