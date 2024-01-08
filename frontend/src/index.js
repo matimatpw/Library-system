@@ -19,6 +19,8 @@ import RegisterForm from "./components/registerForm";
 import Logout from "./components/logout";
 import auth from "./services/authService";
 import "./css/index.css";
+import Profile from "./components/profile";
+
 
 const supabase = createClient(
   "https://ibdbiitmohlorehxiljr.supabase.co",
@@ -48,6 +50,7 @@ export default function AppIndex() {
           <Route path="/addbookform" element={<AddBookForm />}></Route>
           <Route path="/deletebookform" element={<DeleteBookForm />}></Route>
           <Route path="/calendar" element={<GoogleCalendar />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
         </Routes>
       </Router>
     </React.Fragment>
