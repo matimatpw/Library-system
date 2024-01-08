@@ -2,7 +2,6 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import auth from "../services/authService";
-import "../css/BookForm.css";
 
 class LoginForm extends Form {
   state = {
@@ -41,7 +40,7 @@ class LoginForm extends Form {
           <div className="row g-3 row-g-3">
             {this.renderInput("password", "Password", "password")}
           </div>
-            {this.renderButton("Login")}
+          {this.renderButton("Login")}
         </form>
       </div>
     );
