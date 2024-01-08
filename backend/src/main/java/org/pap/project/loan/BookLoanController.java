@@ -16,17 +16,17 @@ public class BookLoanController {
 
     @GetMapping
     public ResponseEntity<List<BookLoan>> getAllBookLoans(){
-        return new ResponseEntity<List<BookLoan>>(bookLoanService.allBookLoans(), HttpStatus.OK);
+        return new ResponseEntity<>(bookLoanService.allBookLoans(), HttpStatus.OK);
     }
 
     @GetMapping("/userid/{userid}")
-    public ResponseEntity<List<BookLoan>> getAllUserLoans(@PathVariable Integer userid){
-        return new ResponseEntity<List<BookLoan>>(bookLoanService.allUserLoans(userid), HttpStatus.OK);
+    public ResponseEntity<List<BookLoanDTO>> getAllUserLoans(@PathVariable Integer userid){
+        return new ResponseEntity<>(bookLoanService.allUserLoans(userid), HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<BookLoan> addNewBookLoan(@RequestBody BookLoan bookLoan){
-        return new ResponseEntity<BookLoan>(bookLoanService.addNewBookLoan(bookLoan), HttpStatus.CREATED);
+    public ResponseEntity<BookLoanDTO> addNewBookLoan(@RequestBody BookLoanRequestDTO bookLoanRequestDTO){
+        return new ResponseEntity<>(bookLoanService.addNewBookLoan(bookLoanRequestDTO), HttpStatus.CREATED);
     }
 
 }

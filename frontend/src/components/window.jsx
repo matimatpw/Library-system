@@ -7,7 +7,7 @@ import { useSession } from "@supabase/auth-helpers-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import auth from "../services/authService"; // import
+import auth from "../services/authService";
 
 const Window = (props) => {
   const [bookCopies, setBookCopies] = useState([]);
@@ -16,7 +16,7 @@ const Window = (props) => {
   const now = new Date();
   const borrowDate = now.toISOString();
   const start = new Date(
-    now.getTime() + 10 * 24 * 60 * 60 * 1000
+    now.getTime() + 10 * 24 * 60 * 60 * 1000,
   ).toISOString(); // 10 dni pozniej
   const end = new Date(now.getTime() + 11 * 24 * 60 * 60 * 1000).toISOString();
 
@@ -41,7 +41,7 @@ const Window = (props) => {
     } catch (error) {
       console.log(error.message);
       alert(
-        "Session undefined. You need to be logged in Google to borrow a book"
+        "Session undefined. You need to be logged in Google to borrow a book",
       );
       window.location.href = "/calendar";
       return;
@@ -78,7 +78,7 @@ const Window = (props) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(event),
-        }
+        },
       );
 
       const data = await response.json();
@@ -97,7 +97,7 @@ const Window = (props) => {
     }
 
     const updatedBookCopies = bookCopies.map((copy) =>
-      copy.id === bookcopy.id ? { ...copy, borrowed: true } : copy
+      copy.id === bookcopy.id ? { ...copy, borrowed: true } : copy,
     );
 
     setBookCopies(updatedBookCopies);
@@ -115,7 +115,7 @@ const Window = (props) => {
         },
         body: JSON.stringify({
           userId: userdata.id, //TODO USER ID
-          copyBookId: bookcopy.id,
+          bookCopyId: bookcopy.id,
           startDate: borrowDate,
           endDate: end,
         }),
@@ -152,7 +152,7 @@ const Window = (props) => {
           body: JSON.stringify({
             isBorrowed: true,
           }),
-        }
+        },
       );
 
       if (!response.ok) {
