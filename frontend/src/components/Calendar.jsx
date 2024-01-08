@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
-import 'react-datepicker/dist/react-datepicker.css';
-import '../css/GoogleCalendar.css';
+import React from "react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import "react-datepicker/dist/react-datepicker.css";
+import "../css/GoogleCalendar.css";
 
 const GoogleCalendar = () => {
   const session = useSession();
@@ -9,13 +9,13 @@ const GoogleCalendar = () => {
 
   const googleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: "google",
       options: {
-        scopes: 'https://www.googleapis.com/auth/calendar',
+        scopes: "https://www.googleapis.com/auth/calendar",
       },
     });
     if (error) {
-      alert('Error logging in');
+      alert("Error logging in");
       console.error(error);
     }
   };
@@ -25,19 +25,26 @@ const GoogleCalendar = () => {
   };
 
   return (
-    <div className='container-2'>
+    <div className="container-2">
       <h2>Google Calendar</h2>
       {session ? (
         <>
-          <h2>You are logged in as ~{session.user.email.split('@')[0]}!</h2>
+          <h2>You are logged in as ~{session.user.email.split("@")[0]}!</h2>
 
-
-          <button className="btn btn-primary" type="submit" onClick={signOut}> Sign out</button>
+          <button className="btn btn-primary" type="submit" onClick={signOut}>
+            {" "}
+            Sign out
+          </button>
         </>
       ) : (
-        <button className="btn btn-primary" type="submit" onClick={googleSignIn}>Sign In with Google to see calendar</button>
+        <button
+          className="btn btn-primary"
+          type="submit"
+          onClick={googleSignIn}
+        >
+          Sign In with Google to see calendar
+        </button>
       )}
-
     </div>
   );
 };
