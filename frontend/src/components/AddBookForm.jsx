@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 import "../css/BookForm.css";
+import AddBooks from "./AddBook";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddBookForm = ({ addBook }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [isbn, setIsbn] = useState("");
   const [error, setError] = useState(null);
+  const [books, setBooks] = useState([]);
+
+  const fetchBooks = () => {
+    fetch("http://localhost:8080/books")
+      .then((response) => response.json())
+      .then((data) => setBooks({data}))
+      .catch((error) => console.error("Error fetching book data:", error));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +39,7 @@ const AddBookForm = ({ addBook }) => {
       if (!response.ok) {
         throw new Error("Nie udało się dodać książki.");
       }
+      toast.success("Book added successfully!");
 
       // const data = await response.json();
 
@@ -38,6 +49,9 @@ const AddBookForm = ({ addBook }) => {
       setAuthor("");
       setIsbn("");
       setError(null);
+      
+      fetchBooks();
+
     } catch (error) {
       console.error("Error adding book:", error);
 
@@ -50,62 +64,76 @@ const AddBookForm = ({ addBook }) => {
   };
 
   return (
-      <div className="container-2">
-        <h2>Add book</h2>
-        <div className="col-5">
+    <div className="container-2">
+      <h2>Add book</h2>
+      <div className="col-5">
         <form onSubmit={handleSubmit}>
           <div className="row g-3 row-g-3">
             <div className="col-2">
-              <label for="title" className="form-label">Title</label>
+              <label for="title" className="form-label">
+                Title
+              </label>
             </div>
             <div className="col-9">
-              <span><input
-                type="text"
-                className="form-control"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
+              <span>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
               </span>
             </div>
           </div>
           <div className="row g-3 row-g-3">
             <div className="col-2">
-              <label for="author" className="form-label">Author</label>
+              <label for="author" className="form-label">
+                Author
+              </label>
             </div>
             <div className="col-9">
-              <span><input
-                type="text"
-                className="form-control"
-                id="author"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-              />
+              <span>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="author"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                />
               </span>
             </div>
           </div>
           <div className="row g-3 row-g-3">
             <div className="col-2">
-              <label for="isbn" className="form-label">ISBN</label>
+              <label for="isbn" className="form-label">
+                ISBN
+              </label>
             </div>
             <div className="col-9">
-              <span><input
-                type="text"
-                className="form-control"
-                id="isbn"
-                value={isbn}
-                onChange={(e) => setIsbn(e.target.value)}
-              />
+              <span>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="isbn"
+                  value={isbn}
+                  onChange={(e) => setIsbn(e.target.value)}
+                />
               </span>
             </div>
           </div>
           <br />
-              {error && <p style={{ color: "red" }}>{error}</p>}
-              <button className="btn btn-primary" type="submit">
-                Add book
-              </button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <button className="btn btn-primary" type="submit">
+            Add book
+          </button>
         </form>
-        </div>
+      </div>
+      <AddBooks 
+        fetchBooks={fetchBooks}
+        books={books}
+      />
+      <ToastContainer />
     </div>
   );
 };
