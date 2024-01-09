@@ -20,6 +20,7 @@ import Logout from "./components/logout";
 import auth from "./services/authService";
 import "./css/index.css";
 import Profile from "./components/profile";
+import AddBooks from "./components/AddBook";
 import DeleteBooks from "./components/DeleteBooks";
 
 const supabase = createClient(
@@ -34,9 +35,11 @@ export default function AppIndex() {
         <NavBar user={auth.getCurrentUser()} />
         <Routes>
           <Route
-            exact path="/"
+            exact
+            path="/"
             element={
-              !auth.getCurrentUser() ? <Navigate to="/login" /> : <App />}
+              !auth.getCurrentUser() ? <Navigate to="/login" /> : <App />
+            }
           ></Route>
           <Route
             path="/login"
@@ -54,8 +57,12 @@ export default function AppIndex() {
           {auth.getCurrentUser() && auth.getIsAdmin() && (
             <React.Fragment>
               <Route path="/addbookform" element={<AddBookForm />}></Route>
-              <Route path="/deletebookform" element={<DeleteBookForm />}></Route>
+              <Route
+                path="/deletebookform"
+                element={<DeleteBookForm />}
+              ></Route>
               <Route path="/deletetest" element={<DeleteBooks />}></Route>
+              <Route path="/addtest" element={<AddBooks />}></Route>
             </React.Fragment>
           )}
           {auth.getCurrentUser() && !auth.getIsAdmin() && (

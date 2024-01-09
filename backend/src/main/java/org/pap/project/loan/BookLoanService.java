@@ -32,5 +32,14 @@ public class BookLoanService {
         return bookLoan;
     }
 
+    public void deleteBookLoan(Integer id){
+        boolean exists = bookLoanRepository.existsById(id);
+        if(!exists){
+            throw new IllegalStateException("BookLoan with id " + id + " does not exist");
+        }
+        bookLoanRepository.deleteById(id);
+
+    }
+
 
 }

@@ -1,25 +1,28 @@
-import React, { Component } from 'react';
-import Modal from 'react-modal';
-import DeleteBookCopyTable from './deleteBooksCopyTable';
+import React, { Component } from "react";
+import Modal from "react-modal";
+import DeleteBookCopyTable from "./deleteBooksCopyTable";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class DeleteWindow extends Component {
-
   state = {
     bookCopies: [],
     sortColumn: { path: "title", order: "asc" },
-  } 
+  };
 
   componentDidMount() {
-    Modal.setAppElement('#root'); // Ustawienie elementu aplikacji na div z id "root"
+    Modal.setAppElement("#root"); // Ustawienie elementu aplikacji na div z id "root"
   }
 
   deleteBookCopy = async (bookcopy) => {
     try {
-        await this.bookCopiesDelete(bookcopy.id);
-        this.fetchbookCopies(this.props.isbn);
-        console.log("Deleting book: ", bookcopy);
+      await this.bookCopiesDelete(bookcopy.id);
+      this.fetchbookCopies(this.props.isbn);
+      toast.success("Book copy deleted successfully!");
+      console.log("Deleting book: ", bookcopy);
     } catch (error) {
-        console.error("Error deleting book:", error);
+      console.error("Error deleting book:", error);
     }
   };
 
@@ -28,17 +31,20 @@ class DeleteWindow extends Component {
       this.fetchbookCopies(this.props.isbn);
     }
   }
-  
+
   bookCopiesDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/bookcopies/delete/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8080/bookcopies/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
     } catch (error) {
-      console.error('Error deleting book copy:', error.message);
+      console.error("Error deleting book copy:", error.message);
     }
   };
 
@@ -49,13 +55,11 @@ class DeleteWindow extends Component {
       .catch((error) => console.error("Error fetching book data:", error));
   };
 
-
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
   render() {
-
     const { length: count } = this.state.bookCopies;
     const { sortColumn } = this.state;
 
@@ -75,9 +79,12 @@ class DeleteWindow extends Component {
           sortColumn={sortColumn}
           deleteBookCopy={this.deleteBookCopy}
         />
-        <button className='btn btn-primary' onClick={this.props.onRequestClose}>Close Modal</button>
+        <button className="btn btn-primary" onClick={this.props.onRequestClose}>
+          Close Modal
+        </button>
+        <ToastContainer />
       </Modal>
-      );
+    );
   }
 }
 

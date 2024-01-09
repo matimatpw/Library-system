@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import DeleteBooksTable from "./deleteBooksTable";
+import AddBooksTable from "./AddBooksTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
-import DeleteWindow from "./deleteBookWindow";
+import Window from "./window";
 import "../css/books.css";
-import { toast, ToastContainer } from "react-toastify";
 
-class DeleteBooks extends Component {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+class AddBooks extends Component {
   state = {
     books: [],
     genres: [],
@@ -17,6 +19,10 @@ class DeleteBooks extends Component {
     sortColumn: { path: "title", order: "asc" },
     showModal: false,
   };
+
+  useEffect() {
+    this.props.fetchBooks();
+  }
 
   handleOpenModal = (isbn) => {
     console.log("Przekazano ISBN:", isbn);
@@ -35,16 +41,9 @@ class DeleteBooks extends Component {
     ];
   }
 
-  fetchBooks = () => {
-    fetch("http://localhost:8080/books")
-      .then((response) => response.json())
-      .then((data) => this.setState({ books: data }))
-      .catch((error) => console.error("Error fetching book data:", error));
-  };
-
-  componentDidMount() {
+  async componentDidMount() {
     const genres = [{ _id: "", name: "All Genres" }, ...this.getGenres()];
-    this.fetchBooks();
+    await this.props.fetchBooks();
 
     this.setState({ genres });
   }
@@ -61,26 +60,11 @@ class DeleteBooks extends Component {
     this.setState({ sortColumn });
   };
 
-  deleteBook = async (isbn) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/books/delete/${isbn}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Nie udało się usunąć książki.");
-      }
-      this.fetchBooks();
-      toast.success("Book deleted successfully!");
-    } catch (error) {
-      console.error("Error deleting book:", error.message);
+  componentDidUpdate(prevProps) {
+    if (prevProps.books !== this.props.books) {
+      this.setState({ books: this.props.books.data });
     }
-  };
+  }
 
   getPagedData = () => {
     const {
@@ -103,6 +87,27 @@ class DeleteBooks extends Component {
     return { totalCount: filtered.length, data: books };
   };
 
+  addBooks = async (isbn) => {
+    const newBook = { isbn };
+    try {
+      const response = await fetch("http://localhost:8080/bookcopies/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newBook),
+      });
+      console.log("Przekazano ISBN:", isbn);
+
+      if (!response.ok) {
+        throw new Error("Failed to add BookCopy: " + response.status);
+      }
+    } catch (error) {
+      console.error("Error adding BookCopy:", error.message);
+    }
+    toast.success("BookCopy added successfully!");
+  };
+
   render() {
     const { length: count } = this.state.books;
     const { pageSize, currentPage, sortColumn } = this.state;
@@ -116,7 +121,11 @@ class DeleteBooks extends Component {
         <div className="row">
           <div className="col-3" />
           <div className="col">
-            <p>Showing {totalCount} books in the database.</p>
+            {/* <p>Showing {totalCount} books in the database.</p> */}
+            <p> </p>
+            <div className="row">
+              <div className="col"></div>
+            </div>
           </div>
         </div>
         <div className="row">
@@ -128,13 +137,13 @@ class DeleteBooks extends Component {
             />
           </div>
           <div className="col">
-            <DeleteBooksTable
+            <AddBooksTable
               books={books}
               sortColumn={sortColumn}
               onSort={this.handleSort}
               showModal={this.state.showModal}
               handleOpenModal={this.handleOpenModal}
-              deleteBook={this.deleteBook}
+              addBooks={this.addBooks}
             />
             <Pagination
               itemsCount={totalCount}
@@ -144,15 +153,10 @@ class DeleteBooks extends Component {
             />
           </div>
         </div>
-        <DeleteWindow
-          showModal={this.state.showModal}
-          onRequestClose={this.handleCloseModal}
-          isbn={this.state.isbn}
-        />
         <ToastContainer />
       </div>
     );
   }
 }
 
-export default DeleteBooks;
+export default AddBooks;
