@@ -23,7 +23,7 @@ class DeleteBooksTable extends Component {
       content: (book) => (
           <button
             className="btn btn-primary"
-            // onClick={() => this.props.deleteBook(book)}
+            onClick={() => this.props.deleteBook(book.isbn)}
           >
             Delete Book
           </button>

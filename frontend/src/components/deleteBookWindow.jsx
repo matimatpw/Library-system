@@ -13,7 +13,7 @@ class DeleteWindow extends Component {
     Modal.setAppElement('#root'); // Ustawienie elementu aplikacji na div z id "root"
   }
 
-  deleteBook = async (bookcopy) => {
+  deleteBookCopy = async (bookcopy) => {
     try {
         await this.bookCopiesDelete(bookcopy.id);
         this.fetchbookCopies(this.props.isbn);
@@ -73,7 +73,7 @@ class DeleteWindow extends Component {
           bookCopies={this.state.bookCopies}
           onSort={this.handleSort}
           sortColumn={sortColumn}
-          deleteBook={this.deleteBook}
+          deleteBookCopy={this.deleteBookCopy}
         />
         <button className='btn btn-primary' onClick={this.props.onRequestClose}>Close Modal</button>
       </Modal>

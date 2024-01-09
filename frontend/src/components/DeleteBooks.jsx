@@ -59,6 +59,23 @@ class DeleteBooks extends Component {
       handleSort = (sortColumn) => {
         this.setState({ sortColumn });
       };
+
+      deleteBook = async (isbn) => {
+        try {
+          const response = await fetch(`http://localhost:8080/books/delete/${isbn}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          if (!response.ok) {
+            throw new Error("Nie udało się usunąć książki.");
+          }
+          this.fetchBooks();
+        } catch (error) {
+          console.error('Error deleting book:', error.message);
+        }
+      };
     
       getPagedData = () => {
         const {
@@ -112,6 +129,7 @@ class DeleteBooks extends Component {
                   onSort={this.handleSort}
                   showModal={this.state.showModal}
                   handleOpenModal={this.handleOpenModal}
+                  deleteBook={this.deleteBook}
                 />
                 <Pagination
                   itemsCount={totalCount}

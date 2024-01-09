@@ -21,7 +21,7 @@ class DeleteBooksCopyTable extends Component {
         <div>
           <button 
             className="btn btn-primary" 
-            onClick={() => this.props.deleteBook(bookcopy)}
+            onClick={() => this.props.deleteBookCopy(bookcopy)}
             disabled={bookcopy.borrowed}
           >
             Delete
