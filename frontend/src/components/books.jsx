@@ -109,7 +109,9 @@ class Books extends Component {
             />
           </div>
           <div className="col-9">
-            Showing {totalCount} books in the database.
+            <div className="text">
+              Showing {totalCount} books in the database.
+            </div>
           </div>
         </div>
         <div className="col-3" />
