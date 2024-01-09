@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/BookForm.css";
 import AddBooks from "./AddBook";
 import { toast, ToastContainer } from "react-toastify";
@@ -7,28 +7,38 @@ const AddBookForm = ({ addBook }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [isbn, setIsbn] = useState("");
+  const [genres, setGenres] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
   const [error, setError] = useState(null);
   const [books, setBooks] = useState([]);
 
   const fetchBooks = () => {
     fetch("http://localhost:8080/books")
       .then((response) => response.json())
-      .then((data) => setBooks({data}))
+      .then((data) => setBooks({ data }))
       .catch((error) => console.error("Error fetching book data:", error));
   };
+
+  useEffect(() => {
+    fetch("http://localhost:8080/genres")
+      .then((response) => response.json())
+      .then((data) => setGenres(data))
+      .catch((error) => console.error("Error fetching genre data:", error));
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !author || !isbn) {
-      alert("Wszystkie pola muszą być wypełnione.");
+    if (!title || !author || !isbn || !selectedGenre) {
+      toast.error("All fields are required.");
       return;
     }
 
-    const newBook = { isbn, title, author };
+    const newBook = { isbn, title, author, genre: selectedGenre };
+    console.log(JSON.stringify(newBook));
 
     try {
-      const response = await fetch("http://localhost:8080/books/add", {
+      const response = await fetch("http://localhost:8080/books/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,29 +47,19 @@ const AddBookForm = ({ addBook }) => {
       });
 
       if (!response.ok) {
-        throw new Error("Nie udało się dodać książki.");
+        throw new Error("Cannot add book with an existing isbn.");
       }
       toast.success("Book added successfully!");
-
-      // const data = await response.json();
-
-      // addBook(data);
 
       setTitle("");
       setAuthor("");
       setIsbn("");
+      setSelectedGenre("");
       setError(null);
-      
+
       fetchBooks();
-
     } catch (error) {
-      console.error("Error adding book:", error);
-
-      if (error.message.includes("Book already exists")) {
-        setError("Książka o podanym ISBN już istnieje.");
-      } else {
-        setError("Wystąpił błąd podczas dodawania książki.");
-      }
+      toast.error(error.message);
     }
   };
 
@@ -122,6 +122,30 @@ const AddBookForm = ({ addBook }) => {
               </span>
             </div>
           </div>
+          <div className="row g-3 row-g-3">
+            <div className="col-2">
+              <label htmlFor="genre" className="form-label">
+                Genre
+              </label>
+            </div>
+            <div className="col-9">
+              <span>
+                <select
+                  className="form-control"
+                  id="genre"
+                  value={selectedGenre}
+                  onChange={(e) => setSelectedGenre(e.target.value)}
+                >
+                  <option value="">Select genre</option>
+                  {genres.map((genre) => (
+                    <option key={genre._id} value={genre._id}>
+                      {genre.name}
+                    </option>
+                  ))}
+                </select>
+              </span>
+            </div>
+          </div>
           <br />
           {error && <p style={{ color: "red" }}>{error}</p>}
           <button className="btn btn-primary" type="submit">
@@ -129,11 +153,8 @@ const AddBookForm = ({ addBook }) => {
           </button>
         </form>
       </div>
-      <AddBooks 
-        fetchBooks={fetchBooks}
-        books={books}
-      />
       <ToastContainer />
+      <AddBooks books={books} />
     </div>
   );
 };
