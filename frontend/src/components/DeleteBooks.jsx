@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import DeleteBooksTable from "./deleteBooksTable";
+import { toast, ToastContainer } from "react-toastify";
+import _ from "lodash";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
-import { paginate } from "../utils/paginate";
-import _ from "lodash";
+import DeleteBooksTable from "./deleteBooksTable";
 import DeleteWindow from "./deleteBookWindow";
+import { paginate } from "../utils/paginate";
 import "../css/books.css";
-import { toast, ToastContainer } from "react-toastify";
 
 class DeleteBooks extends Component {
   state = {
@@ -70,12 +70,20 @@ class DeleteBooks extends Component {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       if (!response.ok) {
         throw new Error("Nie udało się usunąć książki.");
       }
-      this.fetchBooks();
+      const newBooks = this.state.books.filter((book) => book.isbn !== isbn);
+      this.setState({ books: newBooks });
+      if (
+        this.state.currentPage > 1 &&
+        newBooks.length % this.state.pageSize === 0
+      ) {
+        this.setState({ currentPage: this.state.currentPage - 1 });
+      }
+      // this.fetchBooks();
       toast.success("Book deleted successfully!");
     } catch (error) {
       console.error("Error deleting book:", error.message);

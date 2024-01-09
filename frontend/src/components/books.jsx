@@ -13,6 +13,7 @@ class Books extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
+    searchInput: "",
     sortColumn: { path: "title", order: "asc" },
     showModal: false,
   };
@@ -60,19 +61,24 @@ class Books extends Component {
     this.setState({ sortColumn });
   };
 
+  handleSearch = (event) => {
+    this.setState({ searchInput: event.target.value, currentPage: 1 });
+  };
+
   getPagedData = () => {
     const {
       pageSize,
       currentPage,
       sortColumn,
-      // selectedGenre,
+      searchInput,
       books: allBooks,
     } = this.state;
 
-    const filtered = allBooks;
-    // selectedGenre && selectedGenre._id
-    //   ? allBooks.filter((b) => b.genre._id === selectedGenre._id)
-    //   : allBooks;
+    let filtered = allBooks;
+    if (searchInput)
+      filtered = allBooks.filter((b) =>
+        b.title.toLowerCase().includes(searchInput.toLowerCase()),
+      );
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
@@ -92,11 +98,21 @@ class Books extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-3" />
-          <div className="col">
+          <div className="col-3">
+            <input
+              type="text"
+              name="query"
+              className="form-control my-3"
+              placeholder="Search..."
+              value={this.state.searchInput}
+              onChange={this.handleSearch}
+            />
+          </div>
+          <div className="col text-right">
             <p>Showing {totalCount} books in the database.</p>
           </div>
         </div>
+        <div className="col-3" />
         <div className="row">
           <div className="col-3">
             <ListGroup

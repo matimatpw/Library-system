@@ -11,7 +11,6 @@ import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { createClient } from "@supabase/supabase-js";
 import App from "./App";
 import AddBookForm from "./components/AddBookForm";
-import DeleteBookForm from "./components/DeleteBookForm";
 import GoogleCalendar from "./components/Calendar";
 import NavBar from "./components/navBar";
 import LoginForm from "./components/loginForm";
@@ -20,12 +19,11 @@ import Logout from "./components/logout";
 import auth from "./services/authService";
 import "./css/index.css";
 import Profile from "./components/profile";
-import AddBooks from "./components/AddBook";
 import DeleteBooks from "./components/DeleteBooks";
 
 const supabase = createClient(
   "https://ibdbiitmohlorehxiljr.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliZGJpaXRtb2hsb3JlaHhpbGpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDM5NDU3MTEsImV4cCI6MjAxOTUyMTcxMX0.YTIy4O0kZ5tXQj3QoqCsUqVBF7FH8f2F8DHXJR8lA08"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliZGJpaXRtb2hsb3JlaHhpbGpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDM5NDU3MTEsImV4cCI6MjAxOTUyMTcxMX0.YTIy4O0kZ5tXQj3QoqCsUqVBF7FH8f2F8DHXJR8lA08",
 );
 
 export default function AppIndex() {
@@ -57,12 +55,9 @@ export default function AppIndex() {
           {auth.getCurrentUser() && auth.getIsAdmin() && (
             <React.Fragment>
               <Route path="/addbookform" element={<AddBookForm />}></Route>
-              <Route
-                path="/deletebookform"
-                element={<DeleteBookForm />}
-              ></Route>
-              <Route path="/deletetest" element={<DeleteBooks />}></Route>
-              <Route path="/addtest" element={<AddBooks />}></Route>
+              <Route path="/deletebookform" element={<DeleteBooks />}></Route>
+              {/*<Route path="/deletetest" element={<DeleteBooks />}></Route>*/}
+              {/*<Route path="/addtest" element={<AddBooks />}></Route>*/}
             </React.Fragment>
           )}
           {auth.getCurrentUser() && !auth.getIsAdmin() && (
@@ -83,7 +78,7 @@ root.render(
     <SessionContextProvider supabaseClient={supabase}>
       <AppIndex />
     </SessionContextProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

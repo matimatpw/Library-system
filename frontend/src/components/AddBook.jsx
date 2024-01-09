@@ -88,14 +88,13 @@ class AddBooks extends Component {
   };
 
   addBooks = async (isbn) => {
-    const newBook = { isbn };
     try {
-      const response = await fetch("http://localhost:8080/bookcopies/add", {
+      const response = await fetch("http://localhost:8080/bookcopies/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newBook),
+        body: isbn,
       });
       console.log("Przekazano ISBN:", isbn);
 
