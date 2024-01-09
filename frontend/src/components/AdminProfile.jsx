@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../css/BookForm.css";
-import { Modal } from "bootstrap";
+import Modal from "react-modal";
 import UserProfile from "./UserProfileForAdmin.jsx";
 import UsersTable from "./usersTable.jsx";
 

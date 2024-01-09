@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Table from "./common/table";
 
-class BookLoanTable extends Component {
+class BookLoanTableReturn extends Component {
 
   columns = [
     { path: "id", label: "Id" },
@@ -38,4 +38,4 @@ class BookLoanTable extends Component {
   }
 }
 
-export default BookLoanTable;
+export default BookLoanTableReturn;

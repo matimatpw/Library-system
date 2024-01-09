@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import BookLoanTableReturn from "./booksLoanTableReturn";
+import BookLoanTableReturn from "./bookLoanTableReturn";
 import "../css/BookForm.css";
 
 class UserProfile extends Component {
