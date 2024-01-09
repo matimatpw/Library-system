@@ -33,8 +33,8 @@ public class BookController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<Book> createBook(@RequestBody Map<String, String> payload){
-        return new ResponseEntity<Book>(bookService.createNewBook(payload.get("isbn"), payload.get("title"),payload.get("author")), HttpStatus.CREATED);
+    public ResponseEntity<Book> createBook(@RequestBody Map<String, String> payload) {
+        return new ResponseEntity<Book>(bookService.createNewBook(payload.get("isbn"), payload.get("title"), payload.get("author"), payload.get("genre")), HttpStatus.CREATED);
     }
 
     @PostMapping("/add")

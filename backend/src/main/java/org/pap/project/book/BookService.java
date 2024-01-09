@@ -1,5 +1,7 @@
 package org.pap.project.book;
 
+import org.pap.project.genre.Genre;
+import org.pap.project.genre.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +15,12 @@ public class BookService {
     private final BookRepository bookRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    private final GenreRepository genreRepository;
+
+    @Autowired
+    public BookService(BookRepository bookRepository, GenreRepository genreRepository) {
         this.bookRepository = bookRepository;
+        this.genreRepository = genreRepository;
     }
 
     public List<Book> allBooks() {
@@ -29,11 +35,15 @@ public class BookService {
         return bookRepository.findBookByTitle(title);
     }
 
-    public Book createNewBook(String isbn, String title, String author) {
-        Book book = new Book(isbn,title, author);
+    public Book createNewBook(String isbn, String title, String author, String genreName) {
+        Optional<Book> bookOptional = bookRepository.findById(isbn);
+        if (bookOptional.isPresent()) {
+            throw new IllegalStateException("Book already exists");
+        }
+        Genre genre = genreRepository.findById(genreName).orElseThrow(() -> new IllegalStateException("Genre with name " + genreName + " does not exist"));
+        Book book = new Book(isbn,title, author, genre);
         bookRepository.save(book);
         return book;
-
     }
 
     public Book addNewBook(@RequestBody Book book) {
