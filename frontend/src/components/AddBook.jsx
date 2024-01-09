@@ -20,6 +20,10 @@ class AddBooks extends Component {
     showModal: false,
   };
 
+  useEffect() {
+    this.props.fetchBooks();
+  }
+
   handleOpenModal = (isbn) => {
     console.log("Przekazano ISBN:", isbn);
     this.setState({ showModal: true, isbn: isbn });
@@ -37,16 +41,9 @@ class AddBooks extends Component {
     ];
   }
 
-  fetchBooks = () => {
-    fetch("http://localhost:8080/books")
-      .then((response) => response.json())
-      .then((data) => this.setState({ books: data }))
-      .catch((error) => console.error("Error fetching book data:", error));
-  };
-
-  componentDidMount() {
+  async componentDidMount() {
     const genres = [{ _id: "", name: "All Genres" }, ...this.getGenres()];
-    this.fetchBooks();
+    await this.props.fetchBooks();
 
     this.setState({ genres });
   }
@@ -62,6 +59,12 @@ class AddBooks extends Component {
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.books !== this.props.books) {
+      this.setState({ books: this.props.books.data });
+    }
+  }
 
   getPagedData = () => {
     const {
@@ -102,7 +105,6 @@ class AddBooks extends Component {
     } catch (error) {
       console.error("Error adding BookCopy:", error.message);
     }
-
     toast.success("BookCopy added successfully!");
   };
 

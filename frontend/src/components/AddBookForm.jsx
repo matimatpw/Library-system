@@ -8,6 +8,14 @@ const AddBookForm = ({ addBook }) => {
   const [author, setAuthor] = useState("");
   const [isbn, setIsbn] = useState("");
   const [error, setError] = useState(null);
+  const [books, setBooks] = useState([]);
+
+  const fetchBooks = () => {
+    fetch("http://localhost:8080/books")
+      .then((response) => response.json())
+      .then((data) => setBooks({data}))
+      .catch((error) => console.error("Error fetching book data:", error));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,6 +49,9 @@ const AddBookForm = ({ addBook }) => {
       setAuthor("");
       setIsbn("");
       setError(null);
+      
+      fetchBooks();
+
     } catch (error) {
       console.error("Error adding book:", error);
 
@@ -118,7 +129,10 @@ const AddBookForm = ({ addBook }) => {
           </button>
         </form>
       </div>
-      <AddBooks />
+      <AddBooks 
+        fetchBooks={fetchBooks}
+        books={books}
+      />
       <ToastContainer />
     </div>
   );
