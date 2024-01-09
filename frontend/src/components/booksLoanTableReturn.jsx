@@ -1,27 +1,17 @@
 import React, { Component } from "react";
 import Table from "./common/table";
 
-class BookLoanTable extends Component {
+class BookLoanTableReturn extends Component {
 
   columns = [
-    { path: "id", label: "Id" },
-    { path: "userId", label: "User Id" },
+    // { path: "id", label: "Id" },
+    // { path: "userId", label: "User Id" },
     { path: "title", label: "Title" },
     { path: "author", label: "Author" },
     { path: "isbn", label: "ISBN" },
     { path: "copyBookId", label: "Book Copy Id" },
     { path: "endDate", label: "Due Date" },
-    {
-      key: "return",
-      content: (loan) => (
-        <button
-          className="btn btn-primary"
-          onClick={() => this.props.removeLoan(loan.copyBookId)}
-        >
-          Return
-        </button>
-      ),
-    },
+    
   ];
 
   render() {
@@ -38,4 +28,4 @@ class BookLoanTable extends Component {
   }
 }
 
-export default BookLoanTable;
+export default BookLoanTableReturn;

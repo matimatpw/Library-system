@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import BookLoanTable from "./bookLoanTable";
+import BookLoanTableReturn from "./bookLoanTableReturn";
 import "../css/BookForm.css";
 
 class UserProfile extends Component {
@@ -13,6 +13,24 @@ class UserProfile extends Component {
     const userdata = this.props.user
     this.fetchfinal(userdata.id);
   }
+
+  removeLoan = (copyBookId) => {
+    try {
+      const response = fetch(
+        `http://localhost:8080/bookloans/delete/${copyBookId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+    }
+    catch (error) {
+      console.error("Error deleting book loan:", error.message);
+    }
+    this.fetchfinal(this.props.user.id);
+  };
 
   fetchfinal = async (userid) => {
     try {
@@ -49,7 +67,7 @@ class UserProfile extends Component {
         <h1>Profile</h1>
         <h2>Book Loans</h2>
         <div className="col-8">
-          <BookLoanTable
+          <BookLoanTableReturn
             mergedBookCopies={mergedBookCopies}
             onSort={this.handleSort}
             sortColumn={sortColumn}
