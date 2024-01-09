@@ -108,8 +108,8 @@ class Books extends Component {
               onChange={this.handleSearch}
             />
           </div>
-          <div className="col text-right">
-            <p>Showing {totalCount} books in the database.</p>
+          <div className="col-9">
+            Showing {totalCount} books in the database.
           </div>
         </div>
         <div className="col-3" />
