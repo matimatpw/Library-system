@@ -28,7 +28,7 @@ class Profile extends Component {
           author: loan["book"]["author"],
           isbn: loan["book"]["isbn"],
           copyBookId: loan["bookCopyId"],
-          endDate: loan["endDate"],
+          endDate: loan["endDate"].substring(0, 10),
         });
       });
       this.setState({ mergedBookCopies });

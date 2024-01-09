@@ -9,16 +9,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 import auth from "../services/authService";
 
+const loanDuration = 30 * 24 * 60 * 60 * 1000;
+const eventDuration = 60 * 60 * 1000;
+
 const Window = (props) => {
   const [bookCopies, setBookCopies] = useState([]);
   const [sortColumn, setSortColumn] = useState({ path: "title", order: "asc" });
 
   const now = new Date();
   const borrowDate = now.toISOString();
-  const start = new Date(
-    now.getTime() + 10 * 24 * 60 * 60 * 1000,
-  ).toISOString(); // 10 dni pozniej
-  const end = new Date(now.getTime() + 11 * 24 * 60 * 60 * 1000).toISOString();
+  const start = new Date(now.getTime() + loanDuration).toISOString(); // 10 dni pozniej
+  const end = new Date(
+    now.getTime() + loanDuration + eventDuration,
+  ).toISOString();
 
   const session = useSession();
 

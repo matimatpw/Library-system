@@ -53,8 +53,8 @@ public class InitService {
         bookCopyRepository.saveAll(bookCopyList);
 
         // Tworzenie wypożyczeń
-        BookLoan bookLoan1 = new BookLoan(userList.get(1), bookCopyList.get(0));
-        bookLoanRepository.saveAll(List.of(bookLoan1));
+//        BookLoan bookLoan1 = new BookLoan(userList.get(1), bookCopyList.get(0));
+//        bookLoanRepository.saveAll(List.of(bookLoan1));
     }
 
     private List<Book> createBooks() {
