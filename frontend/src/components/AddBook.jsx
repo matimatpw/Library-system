@@ -7,6 +7,9 @@ import _ from "lodash";
 import Window from "./window";
 import "../css/books.css";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 class AddBooks extends Component {
   state = {
     books: [],
@@ -99,6 +102,8 @@ class AddBooks extends Component {
     } catch (error) {
       console.error("Error adding BookCopy:", error.message);
     }
+
+    toast.success("BookCopy added successfully!");
   };
 
   render() {
@@ -146,6 +151,7 @@ class AddBooks extends Component {
             />
           </div>
         </div>
+        <ToastContainer />
       </div>
     );
   }

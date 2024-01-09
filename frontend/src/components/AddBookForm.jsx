@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/BookForm.css";
 import AddBooks from "./AddBook";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddBookForm = ({ addBook }) => {
   const [title, setTitle] = useState("");
@@ -30,6 +31,7 @@ const AddBookForm = ({ addBook }) => {
       if (!response.ok) {
         throw new Error("Nie udało się dodać książki.");
       }
+      toast.success("Book added successfully!");
 
       // const data = await response.json();
 
@@ -117,6 +119,7 @@ const AddBookForm = ({ addBook }) => {
         </form>
       </div>
       <AddBooks />
+      <ToastContainer />
     </div>
   );
 };
