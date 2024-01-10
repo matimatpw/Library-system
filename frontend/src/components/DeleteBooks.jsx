@@ -7,6 +7,7 @@ import DeleteBooksTable from "./deleteBooksTable";
 import DeleteWindow from "./deleteBookWindow";
 import { paginate } from "../utils/paginate";
 import "../css/books.css";
+import AddBooksTable from "./AddBooksTable";
 
 class DeleteBooks extends Component {
   state = {
@@ -14,12 +15,13 @@ class DeleteBooks extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
+    searchInput: "",
+    selectedGenre: "",
     sortColumn: { path: "title", order: "asc" },
     showModal: false,
   };
 
   handleOpenModal = (isbn) => {
-    console.log("Przekazano ISBN:", isbn);
     this.setState({ showModal: true, isbn: isbn });
   };
 
@@ -27,12 +29,13 @@ class DeleteBooks extends Component {
     this.setState({ showModal: false });
   };
 
-  getGenres() {
-    return [
-      { _id: "5b21ca3eeb7f6fbccd471818", name: "Fiction" },
-      { _id: "5b21ca3eeb7f6fbccd471814", name: "Non-Fiction" },
-      { _id: "5b21ca3eeb7f6fbccd471820", name: "Science Fiction" },
-    ];
+  fetchGenres() {
+    fetch("http://localhost:8080/genres")
+      .then((response) => response.json())
+      .then((data) =>
+        this.setState({ genres: [{ _id: "", name: "All Genres" }, ...data] }),
+      )
+      .catch((error) => console.error("Error fetching genre data:", error));
   }
 
   fetchBooks = () => {
@@ -43,10 +46,8 @@ class DeleteBooks extends Component {
   };
 
   componentDidMount() {
-    const genres = [{ _id: "", name: "All Genres" }, ...this.getGenres()];
     this.fetchBooks();
-
-    this.setState({ genres });
+    this.fetchGenres();
   }
 
   handlePageChange = (page) => {
@@ -59,6 +60,10 @@ class DeleteBooks extends Component {
 
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
+  };
+
+  handleSearch = (event) => {
+    this.setState({ searchInput: event.target.value, currentPage: 1 });
   };
 
   deleteBook = async (isbn) => {
@@ -95,14 +100,21 @@ class DeleteBooks extends Component {
       pageSize,
       currentPage,
       sortColumn,
-      // selectedGenre,
+      searchInput,
+      selectedGenre,
       books: allBooks,
     } = this.state;
 
-    const filtered = allBooks;
-    // selectedGenre && selectedGenre._id
-    //   ? allBooks.filter((b) => b.genre._id === selectedGenre._id)
-    //   : allBooks;
+    let filtered = allBooks;
+    if (searchInput)
+      filtered = allBooks.filter((b) =>
+        b.title.toLowerCase().includes(searchInput.toLowerCase()),
+      );
+
+    if (selectedGenre) {
+      if (selectedGenre.name !== "All Genres")
+        filtered = filtered.filter((b) => b.genre.name === selectedGenre.name);
+    }
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
@@ -122,11 +134,21 @@ class DeleteBooks extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-3" />
-          <div className="col">
+          <div className="col-3">
+            <input
+              type="text"
+              name="query"
+              className="form-control my-3"
+              placeholder="Search..."
+              value={this.state.searchInput}
+              onChange={this.handleSearch}
+            />
+          </div>
+          <div className="col text-right">
             <p>Showing {totalCount} books in the database.</p>
           </div>
         </div>
+        <div className="col-3" />
         <div className="row">
           <div className="col-3">
             <ListGroup

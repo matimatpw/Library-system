@@ -30,6 +30,7 @@ public class SecurityConfig {
                                 "/bookcopies/**",
                                 "/bookloans/**",
                                 "/users/**"
+                                "/genres/**"
                                 ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session

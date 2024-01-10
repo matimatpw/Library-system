@@ -4,7 +4,6 @@ import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
-import Window from "./window";
 import "../css/books.css";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -16,16 +15,13 @@ class AddBooks extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
+    searchInput: "",
+    selectedGenre: "",
     sortColumn: { path: "title", order: "asc" },
     showModal: false,
   };
 
-  useEffect() {
-    this.props.fetchBooks();
-  }
-
   handleOpenModal = (isbn) => {
-    console.log("Przekazano ISBN:", isbn);
     this.setState({ showModal: true, isbn: isbn });
   };
 
@@ -33,19 +29,25 @@ class AddBooks extends Component {
     this.setState({ showModal: false });
   };
 
-  getGenres() {
-    return [
-      { _id: "5b21ca3eeb7f6fbccd471818", name: "Fiction" },
-      { _id: "5b21ca3eeb7f6fbccd471814", name: "Non-Fiction" },
-      { _id: "5b21ca3eeb7f6fbccd471820", name: "Science Fiction" },
-    ];
+  fetchGenres() {
+    fetch("http://localhost:8080/genres")
+      .then((response) => response.json())
+      .then((data) =>
+        this.setState({ genres: [{ _id: "", name: "All Genres" }, ...data] }),
+      )
+      .catch((error) => console.error("Error fetching genre data:", error));
   }
 
-  async componentDidMount() {
-    const genres = [{ _id: "", name: "All Genres" }, ...this.getGenres()];
-    await this.props.fetchBooks();
+  fetchBooks = () => {
+    fetch("http://localhost:8080/books")
+      .then((response) => response.json())
+      .then((data) => this.setState({ books: data }))
+      .catch((error) => console.error("Error fetching book data:", error));
+  };
 
-    this.setState({ genres });
+  componentDidMount() {
+    this.fetchBooks();
+    this.fetchGenres();
   }
 
   handlePageChange = (page) => {
@@ -60,6 +62,10 @@ class AddBooks extends Component {
     this.setState({ sortColumn });
   };
 
+  handleSearch = (event) => {
+    this.setState({ searchInput: event.target.value, currentPage: 1 });
+  };
+
   componentDidUpdate(prevProps) {
     if (prevProps.books !== this.props.books) {
       this.setState({ books: this.props.books.data });
@@ -71,14 +77,21 @@ class AddBooks extends Component {
       pageSize,
       currentPage,
       sortColumn,
-      // selectedGenre,
+      searchInput,
+      selectedGenre,
       books: allBooks,
     } = this.state;
 
-    const filtered = allBooks;
-    // selectedGenre && selectedGenre._id
-    //   ? allBooks.filter((b) => b.genre._id === selectedGenre._id)
-    //   : allBooks;
+    let filtered = allBooks;
+    if (searchInput)
+      filtered = allBooks.filter((b) =>
+        b.title.toLowerCase().includes(searchInput.toLowerCase()),
+      );
+
+    if (selectedGenre) {
+      if (selectedGenre.name !== "All Genres")
+        filtered = filtered.filter((b) => b.genre.name === selectedGenre.name);
+    }
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
@@ -118,15 +131,21 @@ class AddBooks extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-3" />
-          <div className="col">
-            {/* <p>Showing {totalCount} books in the database.</p> */}
-            <p> </p>
-            <div className="row">
-              <div className="col"></div>
-            </div>
+          <div className="col-3">
+            <input
+              type="text"
+              name="query"
+              className="form-control my-3"
+              placeholder="Search..."
+              value={this.state.searchInput}
+              onChange={this.handleSearch}
+            />
+          </div>
+          <div className="col text-right">
+            <p>Showing {totalCount} books in the database.</p>
           </div>
         </div>
+        <div className="col-3" />
         <div className="row">
           <div className="col-3">
             <ListGroup

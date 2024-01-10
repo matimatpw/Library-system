@@ -14,12 +14,12 @@ class Books extends Component {
     currentPage: 1,
     pageSize: 4,
     searchInput: "",
+    selectedGenre: "",
     sortColumn: { path: "title", order: "asc" },
     showModal: false,
   };
 
   handleOpenModal = (isbn) => {
-    console.log("Przekazano ISBN:", isbn);
     this.setState({ showModal: true, isbn: isbn });
   };
 
@@ -27,12 +27,13 @@ class Books extends Component {
     this.setState({ showModal: false });
   };
 
-  getGenres() {
-    return [
-      { _id: "5b21ca3eeb7f6fbccd471818", name: "Fiction" },
-      { _id: "5b21ca3eeb7f6fbccd471814", name: "Non-Fiction" },
-      { _id: "5b21ca3eeb7f6fbccd471820", name: "Science Fiction" },
-    ];
+  fetchGenres() {
+    fetch("http://localhost:8080/genres")
+      .then((response) => response.json())
+      .then((data) =>
+        this.setState({ genres: [{ _id: "", name: "All Genres" }, ...data] }),
+      )
+      .catch((error) => console.error("Error fetching genre data:", error));
   }
 
   fetchBooks = () => {
@@ -43,10 +44,8 @@ class Books extends Component {
   };
 
   componentDidMount() {
-    const genres = [{ _id: "", name: "All Genres" }, ...this.getGenres()];
     this.fetchBooks();
-
-    this.setState({ genres });
+    this.fetchGenres();
   }
 
   handlePageChange = (page) => {
@@ -71,6 +70,7 @@ class Books extends Component {
       currentPage,
       sortColumn,
       searchInput,
+      selectedGenre,
       books: allBooks,
     } = this.state;
 
@@ -79,6 +79,11 @@ class Books extends Component {
       filtered = allBooks.filter((b) =>
         b.title.toLowerCase().includes(searchInput.toLowerCase()),
       );
+
+    if (selectedGenre) {
+      if (selectedGenre.name !== "All Genres")
+        filtered = filtered.filter((b) => b.genre.name === selectedGenre.name);
+    }
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
