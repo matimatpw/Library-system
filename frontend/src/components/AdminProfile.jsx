@@ -42,7 +42,7 @@ class AdminProfile extends Component {
     const { users, sortColumn } = this.state;
     const count = users.length;
 
-    if (count === 0) return <p>There are no books in the database.</p>;
+    if (count === 0) return <p>There are no users with bookloans.</p>;
 
     return (
       <div className="container-2">

@@ -43,6 +43,9 @@ class Profile extends Component {
 
   render() {
     const { mergedBookCopies, sortColumn } = this.state;
+    const count = mergedBookCopies.length;
+
+    if (count === 0) return <p>You have no bookloans.</p>;
 
     return (
       <div className="container-2">
