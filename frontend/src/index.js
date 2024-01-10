@@ -24,7 +24,7 @@ import AdminProfile from "./components/AdminProfile";
 
 const supabase = createClient(
   "https://ibdbiitmohlorehxiljr.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliZGJpaXRtb2hsb3JlaHhpbGpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDM5NDU3MTEsImV4cCI6MjAxOTUyMTcxMX0.YTIy4O0kZ5tXQj3QoqCsUqVBF7FH8f2F8DHXJR8lA08",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliZGJpaXRtb2hsb3JlaHhpbGpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDM5NDU3MTEsImV4cCI6MjAxOTUyMTcxMX0.YTIy4O0kZ5tXQj3QoqCsUqVBF7FH8f2F8DHXJR8lA08"
 );
 
 export default function AppIndex() {
@@ -81,7 +81,7 @@ root.render(
     <SessionContextProvider supabaseClient={supabase}>
       <AppIndex />
     </SessionContextProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

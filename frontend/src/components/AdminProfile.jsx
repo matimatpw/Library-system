@@ -12,7 +12,6 @@ class AdminProfile extends Component {
     user: {},
   };
 
-
   componentDidMount() {
     this.fetchusers();
   }
@@ -44,7 +43,7 @@ class AdminProfile extends Component {
 
     return (
       <div className="container-2">
-        <h2>Users that has loans</h2>
+        <h2>Users that have loans</h2>
         <div className="col-8">
           <UsersTable
             users={users}

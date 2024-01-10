@@ -7,7 +7,6 @@ import DeleteBooksTable from "./deleteBooksTable";
 import DeleteWindow from "./deleteBookWindow";
 import { paginate } from "../utils/paginate";
 import "../css/books.css";
-import AddBooksTable from "./AddBooksTable";
 
 class DeleteBooks extends Component {
   state = {
@@ -33,7 +32,7 @@ class DeleteBooks extends Component {
     fetch("http://localhost:8080/genres")
       .then((response) => response.json())
       .then((data) =>
-        this.setState({ genres: [{ _id: "", name: "All Genres" }, ...data] }),
+        this.setState({ genres: [{ _id: "", name: "All Genres" }, ...data] })
       )
       .catch((error) => console.error("Error fetching genre data:", error));
   }
@@ -75,9 +74,10 @@ class DeleteBooks extends Component {
           headers: {
             "Content-Type": "application/json",
           },
-        },
+        }
       );
       if (!response.ok) {
+        toast.error("Cannot delete book with existing copies.");
         throw new Error("Nie udało się usunąć książki.");
       }
       const newBooks = this.state.books.filter((book) => book.isbn !== isbn);
@@ -108,7 +108,7 @@ class DeleteBooks extends Component {
     let filtered = allBooks;
     if (searchInput)
       filtered = allBooks.filter((b) =>
-        b.title.toLowerCase().includes(searchInput.toLowerCase()),
+        b.title.toLowerCase().includes(searchInput.toLowerCase())
       );
 
     if (selectedGenre) {
@@ -144,8 +144,12 @@ class DeleteBooks extends Component {
               onChange={this.handleSearch}
             />
           </div>
-          <div className="col text-right">
-            <p>Showing {totalCount} books in the database.</p>
+          <div className="col-9">
+            <div className="show">
+              <div className="text">
+                Showing {totalCount} books in the database.
+              </div>
+            </div>
           </div>
         </div>
         <div className="col-3" />
