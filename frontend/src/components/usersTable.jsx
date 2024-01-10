@@ -4,7 +4,7 @@ import Table from "./common/table";
 class UsersTable extends Component {
   columns = [
     { path: "id", label: "ID" },
-    { path: "userame", label: "Username" },
+    { path: "email", label: "Email" },
     { path: "name", label: "Name" },
     {
       key: "loans",
