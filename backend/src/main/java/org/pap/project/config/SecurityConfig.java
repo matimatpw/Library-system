@@ -29,7 +29,7 @@ public class SecurityConfig {
                                 "/books/**",
                                 "/bookcopies/**",
                                 "/bookloans/**",
-                                "/users/**"
+                                "/users/**",
                                 "/genres/**"
                                 ).permitAll()
                         .anyRequest().authenticated())
