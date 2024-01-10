@@ -31,7 +31,7 @@ class Books extends Component {
     fetch("http://localhost:8080/genres")
       .then((response) => response.json())
       .then((data) =>
-        this.setState({ genres: [{ _id: "", name: "All Genres" }, ...data] }),
+        this.setState({ genres: [{ _id: "", name: "All Genres" }, ...data] })
       )
       .catch((error) => console.error("Error fetching genre data:", error));
   }
@@ -77,7 +77,7 @@ class Books extends Component {
     let filtered = allBooks;
     if (searchInput)
       filtered = allBooks.filter((b) =>
-        b.title.toLowerCase().includes(searchInput.toLowerCase()),
+        b.title.toLowerCase().includes(searchInput.toLowerCase())
       );
 
     if (selectedGenre) {
