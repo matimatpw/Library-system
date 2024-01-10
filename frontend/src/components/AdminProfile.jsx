@@ -35,6 +35,7 @@ class AdminProfile extends Component {
   };
 
   handleCloseModal = () => {
+    this.fetchusers();
     this.setState({ showModal: false });
   };
 
@@ -43,7 +44,7 @@ class AdminProfile extends Component {
 
     return (
       <div className="container-2">
-        <h2>Users</h2>
+        <h2>Users that has loans</h2>
         <div className="col-8">
           <UsersTable
             users={users}

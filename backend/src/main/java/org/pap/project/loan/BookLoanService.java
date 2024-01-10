@@ -59,6 +59,8 @@ public class BookLoanService {
         }
         Integer bookcopyId = bookLoanRepository.findById(id).get().getBookCopy().getId();
         bookCopyService.updateBookCopyStatus(bookcopyId, false);
+        User user = bookLoanRepository.findById(id).get().getUser();
+        user.setLoans(user.getLoans() - 1);
         bookLoanRepository.deleteById(id);
 
     }

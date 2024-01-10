@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private Integer loans = 0;
+    private Integer loans;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

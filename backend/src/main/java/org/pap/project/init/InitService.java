@@ -78,6 +78,6 @@ public class InitService {
     private List<User> createUsers() {
         return List.of(
                 User.builder().name("admin").email("admin@admin").password(passwordEncoder.encode("admin")).role(Role.ADMIN).build(),
-                User.builder().name("user").email("user@user").password(passwordEncoder.encode("12345")).role(Role.USER).build());
+                User.builder().name("user").email("user@user").password(passwordEncoder.encode("12345")).role(Role.USER).loans(0).build());
     }
 }
