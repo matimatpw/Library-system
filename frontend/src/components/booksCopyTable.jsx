@@ -5,7 +5,7 @@ class BooksCopyTable extends Component {
 
   columns = [
     { path: "id", label: "Id" },
-    { path: "isbn", label: "ISBN" },
+    { path: "book.isbn", label: "ISBN" },
     { 
       path: "borrowed", 
       label: "isBorrowed",
