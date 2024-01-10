@@ -7,10 +7,11 @@ import UsersTable from "./usersTable.jsx";
 class AdminProfile extends Component {
   state = {
     users: [],
-    sortColumn: { path: "id", order: "asc" },
+    sortColumn: { path: "title", order: "asc" },
     showModal: false,
     user: {},
   };
+
 
   componentDidMount() {
     this.fetchusers();

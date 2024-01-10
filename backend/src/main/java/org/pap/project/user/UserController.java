@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -26,6 +27,11 @@ public class UserController {
     @GetMapping("/byRole/{role}")
     public ResponseEntity<List<User>> getUsersByRole(@PathVariable Role role) {
         return new ResponseEntity<>(userService.getUsersByRole(role), HttpStatus.OK);
+    }
+
+    @GetMapping("/byID/{ID}")
+    public ResponseEntity<Optional<User>> getUsersById(@PathVariable Integer ID) {
+        return new ResponseEntity<Optional<User>>(userService.getUserByID(ID), HttpStatus.OK);
     }
 
 }

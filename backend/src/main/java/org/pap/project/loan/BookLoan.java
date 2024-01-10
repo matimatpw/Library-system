@@ -32,6 +32,7 @@ public class BookLoan {
         this.bookCopy = bookCopy;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.user.setLoans(this.user.getLoans() + 1);
     }
 
     public BookLoan(User user, BookCopy bookCopy){

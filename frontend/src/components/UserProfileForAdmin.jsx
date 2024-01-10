@@ -1,22 +1,20 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import BookLoanTableReturn from "./bookLoanTableReturn";
 import "../css/BookForm.css";
 
-class UserProfile extends Component {
-  state = {
-    mergedBookCopies: [],
-    sortColumn: { path: "id", order: "asc" },
-  };
+const UserProfile = (props) => {
+  const [mergedBookCopies, setMergedBookCopies] = useState([]);
+  const [sortColumn, setSortColumn] = useState({ path: "id", order: "asc" });
 
-  componentDidMount() {
-    const userdata = this.props.user;
-    this.fetchfinal(userdata.id);
-  }
+  useEffect(() => {
+    fetchfinal(props.user.id);
+  }, [props.user.id]);
 
-  removeLoan = (copyBookId) => {
+  const removeLoan = async (id) => {
     try {
-      const response = fetch(
-        `http://localhost:8080/bookloans/delete/copyId/${copyBookId}`,
+      console.log("id", id);
+      const response = await fetch(
+        `http://localhost:8080/bookloans/delete/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -27,11 +25,12 @@ class UserProfile extends Component {
     } catch (error) {
       console.error("Error deleting book loan:", error.message);
     }
-    this.fetchfinal(this.props.user.id);
+    fetchfinal(props.user.id);
   };
 
-  fetchfinal = async (userid) => {
+  const fetchfinal = async (userid) => {
     try {
+      console.log("id", userid);
       const response = await fetch(
         `http://localhost:8080/bookloans/userid/${userid}`
       );
@@ -40,6 +39,8 @@ class UserProfile extends Component {
 
       data.forEach((loan) => {
         mergedBookCopies.push({
+          id: loan["id"],
+          userId: loan["user"]["id"],
           title: loan["book"]["title"],
           author: loan["book"]["author"],
           isbn: loan["book"]["isbn"],
@@ -47,34 +48,29 @@ class UserProfile extends Component {
           endDate: loan["endDate"].substring(0, 10),
         });
       });
-      this.setState({ mergedBookCopies });
+      setMergedBookCopies(mergedBookCopies);
     } catch (error) {
       console.error("Error fetching book loans:", error);
     }
   };
 
-  handleSort = (sortColumn) => {
-    this.setState({ sortColumn });
+  const handleSort = (sortColumn) => {
+    setSortColumn(sortColumn);
   };
-
-  render() {
-    const { mergedBookCopies, sortColumn } = this.state;
 
     return (
       <div className="container-2">
-        <h1>Profile</h1>
-        <h2>Book Loans</h2>
+        <h1>Book Loans</h1>
         <div className="col-8">
           <BookLoanTableReturn
             mergedBookCopies={mergedBookCopies}
-            onSort={this.handleSort}
+            onSort={handleSort}
             sortColumn={sortColumn}
-            handleRemoveLoan={this.removeLoan}
+            handleRemoveLoan={removeLoan}
           />
         </div>
       </div>
     );
-  }
-}
+};
 
 export default UserProfile;
