@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Table from "./common/table";
 
 class BookLoanTableReturn extends Component {
-
   columns = [
     { path: "id", label: "Id" },
     { path: "userId", label: "User Id" },
@@ -16,7 +15,7 @@ class BookLoanTableReturn extends Component {
       content: (loan) => (
         <button
           className="btn btn-primary"
-          onClick={() => this.props.removeLoan(loan.copyBookId)}
+          onClick={() => this.props.handleRemoveLoan(loan.copyBookId)}
         >
           Return
         </button>
@@ -25,15 +24,15 @@ class BookLoanTableReturn extends Component {
   ];
 
   render() {
-    const {mergedBookCopies, onSort, sortColumn } = this.props;
+    const { mergedBookCopies, onSort, sortColumn } = this.props;
 
     return (
-        <Table
-          columns={this.columns}
-          data={mergedBookCopies}
-          sortColumn={sortColumn}
-          onSort={onSort}
-        />
+      <Table
+        columns={this.columns}
+        data={mergedBookCopies}
+        sortColumn={sortColumn}
+        onSort={onSort}
+      />
     );
   }
 }

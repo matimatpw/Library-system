@@ -8,25 +8,23 @@ class UserProfile extends Component {
     sortColumn: { path: "id", order: "asc" },
   };
 
-
   componentDidMount() {
-    const userdata = this.props.user
+    const userdata = this.props.user;
     this.fetchfinal(userdata.id);
   }
 
   removeLoan = (copyBookId) => {
     try {
       const response = fetch(
-        `http://localhost:8080/bookloans/delete/${copyBookId}`,
+        `http://localhost:8080/bookloans/delete/copyId/${copyBookId}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
-        },
+        }
       );
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error deleting book loan:", error.message);
     }
     this.fetchfinal(this.props.user.id);
@@ -35,7 +33,7 @@ class UserProfile extends Component {
   fetchfinal = async (userid) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/bookloans/userid/${userid}`,
+        `http://localhost:8080/bookloans/userid/${userid}`
       );
       const data = await response.json();
       let mergedBookCopies = [];
@@ -71,6 +69,7 @@ class UserProfile extends Component {
             mergedBookCopies={mergedBookCopies}
             onSort={this.handleSort}
             sortColumn={sortColumn}
+            handleRemoveLoan={this.removeLoan}
           />
         </div>
       </div>

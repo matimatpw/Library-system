@@ -17,10 +17,11 @@ class AdminProfile extends Component {
   }
 
   fetchusers = async () => {
-    fetch("http://localhost:8080/users")
-    .then((response) => response.json())
-    .then((data) => this.setState({ users: data }))
-    .catch((error) => console.error("Error fetching book data:", error));
+    const user_admin = "USER"; // info: toggle for finding user or admin | takes: "USER" or "ADMIN"
+    fetch("http://localhost:8080/users/byRole/" + user_admin)
+      .then((response) => response.json())
+      .then((data) => this.setState({ users: data }))
+      .catch((error) => console.error("Error fetching book data:", error));
   };
 
   handleSort = (sortColumn) => {
@@ -47,19 +48,18 @@ class AdminProfile extends Component {
             users={users}
             onSort={this.handleSort}
             sortColumn={sortColumn}
+            handleOpenModal={this.handleOpenModal}
           />
         </div>
         <Modal
-            isOpen={this.state.showModal}
-            onRequestClose={this.handleCloseModal}
-            contentLabel={"Example Modal"}
+          isOpen={this.state.showModal}
+          onRequestClose={this.handleCloseModal}
+          contentLabel={"Example Modal"}
         >
-            <UserProfile 
-                user={this.state.user}
-            />
-            <button className="btn btn-primary" onClick={this.onRequestClose}>
-                Close Modal
-            </button>
+          <UserProfile user={this.state.user} />
+          <button className="btn btn-primary" onClick={this.handleCloseModal}>
+            Close Modal
+          </button>
         </Modal>
       </div>
     );
