@@ -11,6 +11,7 @@ class BookLoanTable extends Component {
     { path: "isbn", label: "ISBN" },
     { path: "copyBookId", label: "Book Copy Id" },
     { path: "endDate", label: "Due Date" },
+    
   ];
 
   render() {

@@ -20,6 +20,7 @@ import auth from "./services/authService";
 import "./css/index.css";
 import Profile from "./components/profile";
 import DeleteBooks from "./components/DeleteBooks";
+import AdminProfile from "./components/AdminProfile";
 
 const supabase = createClient(
   "https://ibdbiitmohlorehxiljr.supabase.co",
@@ -32,13 +33,13 @@ export default function AppIndex() {
       <Router>
         <NavBar user={auth.getCurrentUser()} />
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              !auth.getCurrentUser() ? <Navigate to="/login" /> : <App />
-            }
-          ></Route>
+          {!auth.getCurrentUser() && (
+            <React.Fragment>
+              <Route path="/calendar" element={<GoogleCalendar />}></Route>
+              <Route path="/profile" element={<Profile />}></Route>
+              <Route path="/" element={<Navigate to="/login" />}></Route>
+            </React.Fragment>
+          )}
           <Route
             path="/login"
             element={
@@ -56,6 +57,7 @@ export default function AppIndex() {
             <React.Fragment>
               <Route path="/addbookform" element={<AddBookForm />}></Route>
               <Route path="/deletebookform" element={<DeleteBooks />}></Route>
+              <Route path="/" element={<AdminProfile />}></Route>
               {/*<Route path="/deletetest" element={<DeleteBooks />}></Route>*/}
               {/*<Route path="/addtest" element={<AddBooks />}></Route>*/}
             </React.Fragment>
@@ -64,6 +66,7 @@ export default function AppIndex() {
             <React.Fragment>
               <Route path="/calendar" element={<GoogleCalendar />}></Route>
               <Route path="/profile" element={<Profile />}></Route>
+              <Route path="/" element={<App />}></Route>
             </React.Fragment>
           )}
         </Routes>

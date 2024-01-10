@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import BookLoanTable from "./bookLoanTable";
+import BookLoanTable from "./booksLoanTable";
 import auth from "../services/authService";
 import "../css/BookForm.css";
 
