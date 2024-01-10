@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BookLoanTableReturn from "./bookLoanTableReturn";
 import "../css/BookForm.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const UserProfile = (props) => {
   const [mergedBookCopies, setMergedBookCopies] = useState([]);
@@ -13,16 +14,15 @@ const UserProfile = (props) => {
   const removeLoan = async (id) => {
     try {
       console.log("id", id);
-      const response = await fetch(
-        `http://localhost:8080/bookloans/delete/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await fetch(`http://localhost:8080/bookloans/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      toast.success("Book succefully given back.");
     } catch (error) {
+      toast.error("Error giving back a book");
       console.error("Error deleting book loan:", error.message);
     }
     fetchfinal(props.user.id);
@@ -58,19 +58,20 @@ const UserProfile = (props) => {
     setSortColumn(sortColumn);
   };
 
-    return (
-      <div className="container-2">
-        <h1>Book Loans</h1>
-        <div className="col-8">
-          <BookLoanTableReturn
-            mergedBookCopies={mergedBookCopies}
-            onSort={handleSort}
-            sortColumn={sortColumn}
-            handleRemoveLoan={removeLoan}
-          />
-        </div>
+  return (
+    <div className="container-2">
+      <h1>Book Loans</h1>
+      <div className="col-8">
+        <BookLoanTableReturn
+          mergedBookCopies={mergedBookCopies}
+          onSort={handleSort}
+          sortColumn={sortColumn}
+          handleRemoveLoan={removeLoan}
+        />
       </div>
-    );
+      <ToastContainer />
+    </div>
+  );
 };
 
 export default UserProfile;
