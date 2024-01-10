@@ -91,7 +91,7 @@ const Window = (props) => {
       }
 
       console.log(data);
-      toast.success("Event created!");
+      toast.success("Loan success!");
       // alert("Event created!");
     } catch (error) {
       console.error("Error creating calendar event:", error);

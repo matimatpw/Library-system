@@ -3,7 +3,7 @@ import Table from "./common/table";
 
 class BookLoanTableReturn extends Component {
   columns = [
-    { path: "id", label: "Loan Id"},
+    { path: "id", label: "Loan Id" },
     { path: "userId", label: "User Id" },
     { path: "title", label: "Title" },
     { path: "author", label: "Author" },
@@ -17,7 +17,7 @@ class BookLoanTableReturn extends Component {
           className="btn btn-primary"
           onClick={() => this.props.handleRemoveLoan(loan.id)}
         >
-          Give Back
+          Return
         </button>
       ),
     },

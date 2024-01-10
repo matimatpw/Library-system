@@ -4,6 +4,7 @@ package org.pap.project.loan;
 import org.pap.project.copy.BookCopy;
 import org.pap.project.copy.BookCopyRepository;
 import org.pap.project.copy.BookCopyService;
+import org.pap.project.email.EmailService;
 import org.pap.project.user.User;
 import org.pap.project.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,11 +31,24 @@ public class BookLoanService {
     private final BookCopyService bookCopyService;
 
     @Autowired
-    public BookLoanService(UserRepository userRepository, BookCopyRepository bookCopyRepository, BookLoanRepository bookLoanRepository, BookCopyService bookCopyService) {
+    private final EmailService emailService;
+
+    public final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
+    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+
+    @Autowired
+    public BookLoanService(
+            UserRepository userRepository,
+            BookCopyRepository bookCopyRepository,
+            BookLoanRepository bookLoanRepository,
+            BookCopyService bookCopyService,
+            EmailService emailService)
+    {
         this.userRepository = userRepository;
         this.bookCopyRepository = bookCopyRepository;
         this.bookLoanRepository = bookLoanRepository;
         this.bookCopyService = bookCopyService;
+        this.emailService = emailService;
     }
 
     public List<BookLoan> allBookLoans(){
@@ -49,6 +65,16 @@ public class BookLoanService {
         BookLoan bookLoan = new BookLoan(user, bookCopy, bookLoanRequestDTO.getStartDate(), bookLoanRequestDTO.getEndDate());
         bookLoanRepository.save(bookLoan);
 
+        String to = user.getEmail();
+        String subject = "Nowe wypożyczenie";
+        String body = "Dzień dobry, \n\n" +
+                "Wypożyczyłeś książkę o tytule: " + bookCopy.getBook().getTitle() + "\n" +
+                "Data wypożyczenia: " + sdf.format(bookLoan.getStartDate()) + "\n" +
+                "Data zwrotu: " + sdf.format(bookLoan.getEndDate()) + "\n\n" +
+                "Pozdrawiamy, \n" +
+                "Biblioteka";
+        emailService.sendEmail(to, subject, body);
+
         return new BookLoanDTO(bookLoan);
     }
 
@@ -57,12 +83,22 @@ public class BookLoanService {
         if(!exists){
             throw new IllegalStateException("BookLoan with id " + id + " does not exist");
         }
-        Integer bookcopyId = bookLoanRepository.findById(id).get().getBookCopy().getId();
-        bookCopyService.updateBookCopyStatus(bookcopyId, false);
-        User user = bookLoanRepository.findById(id).get().getUser();
+        BookLoan bookLoan = bookLoanRepository.findById(id).get();
+        BookCopy bookCopy = bookLoan.getBookCopy();
+        bookCopyService.updateBookCopyStatus(bookCopy.getId(), false);
+        User user = bookLoan.getUser();
         user.setLoans(user.getLoans() - 1);
         bookLoanRepository.deleteById(id);
 
+        String to = user.getEmail();
+        String subject = "Zwrot książki";
+        String body = "Dzień dobry, \n\n" +
+                "Zwróciłeś książkę o tytule: " + bookCopy.getBook().getTitle() + "\n" +
+                "Data wypożyczenia: " + bookLoan.getStartDate() + "\n" +
+                "Data zwrotu: " + sdf.format(new Date()) + "\n\n" +
+                "Pozdrawiamy, \n" +
+                "Biblioteka";
+        emailService.sendEmail(to, subject, body);
     }
 
 

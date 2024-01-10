@@ -20,9 +20,9 @@ const UserProfile = (props) => {
           "Content-Type": "application/json",
         },
       });
-      toast.success("Book succefully given back.");
+      toast.success("Book succefully returned.");
     } catch (error) {
-      toast.error("Error giving back a book");
+      toast.error("Error returning a book");
       console.error("Error deleting book loan:", error.message);
     }
     fetchfinal(props.user.id);
@@ -32,7 +32,7 @@ const UserProfile = (props) => {
     try {
       console.log("id", userid);
       const response = await fetch(
-        `http://localhost:8080/bookloans/userid/${userid}`
+        `http://localhost:8080/bookloans/userid/${userid}`,
       );
       const data = await response.json();
       let mergedBookCopies = [];
