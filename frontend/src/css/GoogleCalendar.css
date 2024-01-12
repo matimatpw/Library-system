@@ -1,0 +1,42 @@
+/* GoogleCalendar.css */
+
+:root {
+    --dark-color: #4c4d4c; /* #4c4d4c */
+    --border-color: #4c4d4c; /* kolor obwódki przyciskow aktywnych */
+    --page-body-color: grey; /* grey */
+    --button-background-color: lightgrey; /* lightgrey */
+    --button-border-color: grey; /* grey */
+    --button-text-color: black; /* black */
+    --nav-bar-background-color: #4c4d4c; /* #4c4d4c */
+  }
+  
+  h2 {
+    color: var(--dark-color);
+  }
+  
+  hr {
+    border-color: var(--border-color);
+  }
+
+  .container-2 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  
+  
+  .signin {
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid var(--button-border-color);
+    border-radius: 4px;
+  }
+  
+  .signin:hover {
+    background-color: var(--button-border-color);
+  }
+  

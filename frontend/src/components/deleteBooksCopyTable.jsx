@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Table from "./common/table";
 
-class BooksCopyTable extends Component {
+class DeleteBooksCopyTable extends Component {
 
   columns = [
     { path: "id", label: "Id" },
-    { path: "book.isbn", label: "ISBN" },
+    { path: "isbn", label: "ISBN" },
     { 
       path: "borrowed", 
       label: "isBorrowed",
@@ -16,15 +16,15 @@ class BooksCopyTable extends Component {
       ),
     },
     {
-      key: "borrow",
+      key: "delete",
       content: (bookcopy) => (
         <div>
           <button 
             className="btn btn-primary" 
-            onClick={() => this.props.borrowBook(bookcopy)}
+            onClick={() => this.props.deleteBookCopy(bookcopy)}
             disabled={bookcopy.borrowed}
           >
-            Borrow
+            Delete
           </button>
         </div>
       ),
@@ -45,4 +45,4 @@ class BooksCopyTable extends Component {
   }
 }
 
-export default BooksCopyTable;
+export default DeleteBooksCopyTable;

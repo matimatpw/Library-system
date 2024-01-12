@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import BooksTable from "./booksTable";
+import { toast, ToastContainer } from "react-toastify";
+import _ from "lodash";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
+import DeleteBooksTable from "./deleteBooksTable";
+import DeleteWindow from "./deleteBookWindow";
 import { paginate } from "../utils/paginate";
-import _ from "lodash";
-import Window from "./window";
 import "../css/books.css";
 
-class Books extends Component {
+class DeleteBooks extends Component {
   state = {
     books: [],
     genres: [],
@@ -64,6 +65,36 @@ class Books extends Component {
     this.setState({ searchInput: event.target.value, currentPage: 1 });
   };
 
+  deleteBook = async (isbn) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/books/delete/${isbn}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        toast.error("Cannot delete book with existing copies.");
+        throw new Error("Nie udało się usunąć książki.");
+      }
+      const newBooks = this.state.books.filter((book) => book.isbn !== isbn);
+      this.setState({ books: newBooks });
+      if (
+        this.state.currentPage > 1 &&
+        newBooks.length % this.state.pageSize === 0
+      ) {
+        this.setState({ currentPage: this.state.currentPage - 1 });
+      }
+      // this.fetchBooks();
+      toast.success("Book deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting book:", error.message);
+    }
+  };
+
   getPagedData = () => {
     const {
       pageSize,
@@ -114,8 +145,10 @@ class Books extends Component {
             />
           </div>
           <div className="col-9">
-            <div className="text">
-              Showing {totalCount} books in the database.
+            <div className="show">
+              <div className="text">
+                Showing {totalCount} books in the database.
+              </div>
             </div>
           </div>
         </div>
@@ -129,12 +162,13 @@ class Books extends Component {
             />
           </div>
           <div className="col">
-            <BooksTable
+            <DeleteBooksTable
               books={books}
               sortColumn={sortColumn}
               onSort={this.handleSort}
               showModal={this.state.showModal}
               handleOpenModal={this.handleOpenModal}
+              deleteBook={this.deleteBook}
             />
             <Pagination
               itemsCount={totalCount}
@@ -144,14 +178,15 @@ class Books extends Component {
             />
           </div>
         </div>
-        <Window
+        <DeleteWindow
           showModal={this.state.showModal}
           onRequestClose={this.handleCloseModal}
           isbn={this.state.isbn}
         />
+        <ToastContainer />
       </div>
     );
   }
 }
 
-export default Books;
+export default DeleteBooks;

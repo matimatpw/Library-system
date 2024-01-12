@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import Table from "./common/table";
 
-class BooksTable extends Component {
-
+class AddBooksTable extends Component {
   columns = [
     { path: "title", label: "Title" },
     { path: "author", label: "Author" },
     { path: "isbn", label: "ISBN" },
     {
-      key: "borrow",
+      key: "add",
       content: (book) => (
-          <button
-            className="btn btn-primary"
-            onClick={() => this.props.handleOpenModal(book.isbn)}
-          >
-            Borrow
-          </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => this.props.addBooks(book.isbn)}
+        >
+          Add
+        </button>
       ),
     },
     // { path: "isBorrowed", label: "isBorrowed" },
@@ -35,4 +34,4 @@ class BooksTable extends Component {
   }
 }
 
-export default BooksTable;
+export default AddBooksTable;

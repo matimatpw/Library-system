@@ -1,11 +1,16 @@
-div.col-2 {
-    margin-left: 20px;
-}
-
 div.col {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 p {
-    margin:0 20px 10px 20px;
+  margin: 0 20px 10px 20px;
+}
+
+.text {
+  margin: 16px 0;
+  padding: 6px 12px;
+}
+
+.show {
+  text-align: center;
 }

@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import BooksTable from "./booksTable";
+import AddBooksTable from "./AddBooksTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
-import Window from "./window";
 import "../css/books.css";
 
-class Books extends Component {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+class AddBooks extends Component {
   state = {
     books: [],
     genres: [],
@@ -64,6 +66,12 @@ class Books extends Component {
     this.setState({ searchInput: event.target.value, currentPage: 1 });
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.books !== this.props.books) {
+      this.setState({ books: this.props.books.data });
+    }
+  }
+
   getPagedData = () => {
     const {
       pageSize,
@@ -90,6 +98,26 @@ class Books extends Component {
     const books = paginate(sorted, currentPage, pageSize);
 
     return { totalCount: filtered.length, data: books };
+  };
+
+  addBooks = async (isbn) => {
+    try {
+      const response = await fetch("http://localhost:8080/bookcopies/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: isbn,
+      });
+      console.log("Przekazano ISBN:", isbn);
+
+      if (!response.ok) {
+        throw new Error("Failed to add BookCopy: " + response.status);
+      }
+    } catch (error) {
+      console.error("Error adding BookCopy:", error.message);
+    }
+    toast.success("BookCopy added successfully!");
   };
 
   render() {
@@ -129,12 +157,13 @@ class Books extends Component {
             />
           </div>
           <div className="col">
-            <BooksTable
+            <AddBooksTable
               books={books}
               sortColumn={sortColumn}
               onSort={this.handleSort}
               showModal={this.state.showModal}
               handleOpenModal={this.handleOpenModal}
+              addBooks={this.addBooks}
             />
             <Pagination
               itemsCount={totalCount}
@@ -144,14 +173,10 @@ class Books extends Component {
             />
           </div>
         </div>
-        <Window
-          showModal={this.state.showModal}
-          onRequestClose={this.handleCloseModal}
-          isbn={this.state.isbn}
-        />
+        <ToastContainer />
       </div>
     );
   }
 }
 
-export default Books;
+export default AddBooks;

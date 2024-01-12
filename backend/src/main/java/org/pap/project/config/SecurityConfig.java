@@ -27,7 +27,10 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/v1/auth/**",
                                 "/books/**",
-                                "/bookcopies/**"
+                                "/bookcopies/**",
+                                "/bookloans/**",
+                                "/users/**",
+                                "/genres/**"
                                 ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
