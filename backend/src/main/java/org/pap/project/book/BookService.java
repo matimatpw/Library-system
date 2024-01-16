@@ -3,6 +3,10 @@ package org.pap.project.book;
 import org.pap.project.genre.Genre;
 import org.pap.project.genre.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +29,27 @@ public class BookService {
 
     public List<Book> allBooks() {
         return bookRepository.findAll();
+    }
+
+    public BookResponse getAllBooks(int pageNumber, int pageSize, String sortBy) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        Page<Book> books = bookRepository.findAll(pageable);
+        List<Book> bookList = books.getContent();
+        List<BookDTO> bookDTOList = bookList.stream()
+                .map(this::mapToBookDTO)
+                .toList();
+
+        return new BookResponse(
+                bookDTOList,
+                books.getNumber(),
+                books.getSize(),
+                books.getTotalPages(),
+                books.getTotalElements()
+        );
+    }
+
+    private BookDTO mapToBookDTO(Book book) {
+        return new BookDTO(book.getIsbn(), book.getTitle(), book.getAuthor(), book.getGenre());
     }
 
     public Optional<Book> singleBookById(@RequestParam(value="isbn")String isbn) {

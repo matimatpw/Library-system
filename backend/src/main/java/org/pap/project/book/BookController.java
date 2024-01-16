@@ -18,9 +18,18 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+//    @GetMapping
+//    public ResponseEntity<List<Book>> getAllBooks() {
+//        return new ResponseEntity<List<Book>>(bookService.allBooks(), HttpStatus.OK);
+//    }
+
     @GetMapping
-    public ResponseEntity<List<Book>> getAllBooks() {
-        return new ResponseEntity<List<Book>>(bookService.allBooks(), HttpStatus.OK);
+    public ResponseEntity<BookResponse> getAllBooks(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "title", required = false) String sortBy
+    ) {
+        return new ResponseEntity<>(bookService.getAllBooks(pageNumber, pageSize, sortBy), HttpStatus.OK);
     }
     @GetMapping("/id/{id}")
     public ResponseEntity<Optional<Book>> getSingleBook(@PathVariable String id){
